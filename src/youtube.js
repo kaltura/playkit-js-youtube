@@ -683,9 +683,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    * @returns {void}
    */
-  set preload(preload: string): void {
-    if (preload)
-  }
+  set preload(preload: string): void {}
 
   /**
    * Gets the preload value of the video element.
