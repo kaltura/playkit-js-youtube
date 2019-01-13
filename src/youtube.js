@@ -131,7 +131,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @static
    */
   static getCapabilities(): Promise<Object> {
-    return Promise.resolve({[Youtube.id]: {autoplay: false, mutedAutoPlay: true}});
+    return Promise.resolve({[Youtube.id]: {autoplay: true, mutedAutoPlay: true}});
   }
 
   /**
