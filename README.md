@@ -1,13 +1,12 @@
-# PlayKit JS HLS - [HLS.JS] Adapter for the [PlayKit JS Player]
+# PlayKit JS YouTube - YouTube Engine for the [PlayKit JS Player]
 
-[![Build Status](https://travis-ci.org/kaltura/playkit-js-hls.svg?branch=master)](https://travis-ci.org/kaltura/playkit-js-hls)
+[![Build Status](https://travis-ci.org/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.org/kaltura/playkit-js-youtube)
 
-PlayKit JS HLS adapter integrates [HLS.JS] with the [PlayKit JS Player].
+PlayKit JS YouTube Engine integrates youtube with the [PlayKit JS Player].
  
-PlayKit JS HLS is written in [ECMAScript6], statically analysed using [Flow] and transpiled in ECMAScript5 using [Babel].
+PlayKit JS YouTube is written in [ECMAScript6], statically analysed using [Flow] and transpiled in ECMAScript5 using [Babel].
 
-[HLS.JS]: https://github.com/video-dev/hls.js
-[HLS.JS API docs]: https://github.com/video-dev/hls.js/blob/master/doc/API.md
+[YouTube Iframe API]: https://developers.google.com/youtube/iframe_api_reference
 [Flow]: https://flow.org/
 [ECMAScript6]: https://github.com/ericdouglas/ES6-Learning#articles--tutorials
 [Babel]: https://babeljs.io
@@ -17,7 +16,7 @@ PlayKit JS HLS is written in [ECMAScript6], statically analysed using [Flow] and
 ### Prerequisites
 The adapter requires [PlayKit JS Player] to be loaded first.
 
-The adapter uses the [HLS.JS] javascript library.
+The engine uses the [YouTube Iframe API] javascript library.
 
 [Playkit JS Player]: https://github.com/kaltura/playkit-js
 
@@ -28,8 +27,8 @@ First, clone and run [yarn] to install dependencies:
 [yarn]: https://yarnpkg.com/lang/en/
 
 ```
-git clone https://github.com/kaltura/playkit-js-hls.git
-cd playkit-js-hls
+git clone https://github.com/kaltura/playkit-js-youtube.git
+cd playkit-js-youtube
 yarn install
 ```
 
@@ -47,7 +46,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 
 ```html
 <script type="text/javascript" src="/PATH/TO/FILE/playkit.js"></script>
-<script type="text/javascript" src="/PATH/TO/FILE/playkit-hls.js"></script>
+<script type="text/javascript" src="/PATH/TO/FILE/playkit-youtube.js"></script>
 <div id="player-placeholder"" style="height:360px; width:640px">
 <script type="text/javascript">
 var playerContainer = document.querySelector("#player-placeholder");
@@ -60,7 +59,7 @@ player.play();
 
 ## Configuration
 
-[HLS.JS] configuration options, documented @[HLS.JS API docs], can be passed via the [PlayKit JS Player] config.
+[YouTube Iframe API] configuration options, can be passed via the [PlayKit JS Player] config.
 
 The configuration is exposed via the playback section:
 
@@ -68,10 +67,8 @@ The configuration is exposed via the playback section:
 {
   playback:{
     options: {
-      html5: {
-        hls: {
-          // HLS.JS configuration options here
-        }
+      youtube: {
+        // YouTube Iframe configuration options here
       }
     }
   }
