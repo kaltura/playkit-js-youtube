@@ -58,7 +58,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   _playerTracks: Array<Track> = [];
 
   /**
-   * The html5 class logger.
+   * The Youtube class logger.
    * @type {any}
    * @static
    * @private
@@ -66,7 +66,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   static _logger: any = getLogger('Youtube');
 
   /**
-   * The html5 capabilities handlers.
+   * The Youtube capabilities handlers.
    * @private
    * @static
    */
@@ -117,7 +117,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   /**
-   * Runs the html5 capabilities tests.
+   * Runs the Youtube capabilities tests.
    * @returns {void}
    * @public
    * @static
@@ -126,7 +126,7 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   /**
    * Gets the youtube capabilities.
-   * @return {Promise<Object>} - The html5 capabilities object.
+   * @return {Promise<Object>} - The Youtube capabilities object.
    * @public
    * @static
    */
@@ -224,34 +224,11 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   /**
-   * Listen to the video element events and triggers them from the engine.
+   * Listen to the video  events and triggers them from the engine.
    * @public
    * @returns {void}
    */
-  // attach(): void {
-  // Object.keys(Html5EventType).forEach(html5Event => {
-  //   this._eventManager.listen(this._el, Html5EventType[html5Event], () => {
-  //     if (Html5EventType[html5Event] === Html5EventType.ERROR) {
-  //       this._handleVideoError();
-  //     } else {
-  //       this.dispatchEvent(new FakeEvent(Html5EventType[html5Event]));
-  //     }
-  //   });
-  // });
-  // if (this._mediaSourceAdapter) {
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.VIDEO_TRACK_CHANGED, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.AUDIO_TRACK_CHANGED, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.TEXT_TRACK_CHANGED, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.ABR_MODE_CHANGED, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.TEXT_CUE_CHANGED, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.TRACKS_CHANGED, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, Html5EventType.ERROR, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, Html5EventType.TIME_UPDATE, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, Html5EventType.PLAYING, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, Html5EventType.WAITING, (event: FakeEvent) => this.dispatchEvent(event));
-  //   this._eventManager.listen(this._mediaSourceAdapter, CustomEventType.MEDIA_RECOVERED, (event: FakeEvent) => this.dispatchEvent(event));
-  // }
-  // }
+  attach(): void {}
 
   /**
    * Handles errors from the video element
@@ -267,17 +244,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    * @returns {void}
    */
-  detach(): void {
-    Object.keys(EventType).forEach(html5Event => {
-      this._eventManager.unlisten(this._el, EventType[html5Event]);
-    });
-    // if (this._mediaSourceAdapter) {
-    //   this._eventManager.unlisten(this._mediaSourceAdapter, CustomEventType.VIDEO_TRACK_CHANGED);
-    //   this._eventManager.unlisten(this._mediaSourceAdapter, CustomEventType.AUDIO_TRACK_CHANGED);
-    //   this._eventManager.unlisten(this._mediaSourceAdapter, CustomEventType.TEXT_TRACK_CHANGED);
-    //   this._eventManager.unlisten(this._mediaSourceAdapter, CustomEventType.TEXT_CUE_CHANGED);
-    // }
-  }
+  detach(): void {}
 
   /**
    * @returns {HTMLVideoElement} - The video element.
@@ -294,7 +261,6 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   selectVideoTrack(videoTrack: VideoTrack): void {
     if (this._api) {
-
       if (videoTrack instanceof VideoTrack && (!videoTrack.active || this.isAdaptiveBitrateEnabled()) ) {
         if (this.isAdaptiveBitrateEnabled()) {
           this.dispatchEvent(EventType.ABR_MODE_CHANGED, {mode: 'manual'});
@@ -396,7 +362,6 @@ class Youtube extends FakeEventTarget implements IEngine {
         this.currentTime = 0;
       }
       this._api.playVideo();
-      // this.dispatchEvent(new FakeEvent(EventType.PLAY));
     }
   }
 
@@ -932,8 +897,6 @@ class Youtube extends FakeEventTarget implements IEngine {
     const loadYouTubePlayer = () => {
       const config = {
         playerVars: {
-          width: 1920,
-          height: 1080,
           controls: 0,
           iv_load_policy: 3,
           disablekb: 1,
