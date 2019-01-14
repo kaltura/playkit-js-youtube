@@ -1,5 +1,5 @@
 //@flow
-import {EventManager, FakeEventTarget, FakeEvent, EventType} from '@playkit-js/playkit-js';
+import {EventManager, FakeEventTarget, FakeEvent, EventType, Error} from '@playkit-js/playkit-js';
 import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack} from '@playkit-js/playkit-js';
 import {Utils, getLogger} from '@playkit-js/playkit-js';
 
@@ -882,6 +882,10 @@ class Youtube extends FakeEventTarget implements IEngine {
   _init(source: PKMediaSourceObject, config: Object): void {
     this._source = source;
     this._config = config;
+    const dispatchError = e => {
+      const error = new Error(Error.Severity.CRITICAL, Error.Category.PLAYER, Error.Code.LOAD_FAILED, e);
+      this.dispatchEvent(new FakeEvent(EventType.ERROR, error));
+    };
     this._sdkLoaded = new Promise((resolve, reject) => {
       this._apiReady = () => {
         if (this._config.playback.muted) {
@@ -889,16 +893,39 @@ class Youtube extends FakeEventTarget implements IEngine {
         }
         resolve();
       };
-      this._apiError = () => {
-        //todo, throw error
-        reject();
+      this._apiError = (e) => {
+        const error = this._getYoutubeErrorCodeData(e.data);
+        dispatchError(error);
+        reject(e.data);
       };
     });
     this._loadYouTubeIframeAPI().then(() => {
       this._loadYouTubePlayer();
+    }).catch(e => {
+      dispatchError(e);
     });
+  }
 
-    // this.attach();
+  _getYoutubeErrorCodeData(errorNumber: number): {code: number, message: string} {
+    switch (errorNumber) {
+      case 2:
+        return { code: errorNumber, message: 'Invalid params' };
+      case 5:
+        return { code: errorNumber, message: 'Error while trying to play the video' };
+      case 100:
+        return { code: errorNumber, message: 'Video not found' };
+      case 101:
+      case 150:
+        return {
+          code: errorNumber,
+          message: 'The owner of the requested video does not allow it to be played in embedded players'
+        };
+      default:
+        return {
+          code: errorNumber,
+          message: 'Unknown error'
+        };
+    }
   }
 
   /**
@@ -958,7 +985,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         resolve();
       };
       tag.onerror = () => {
-        reject();
+        reject({message: "Youtube Iframe API loading failed: " + url});
       };
       const firstScriptTag = document.getElementsByTagName('script')[0];
       if (firstScriptTag && firstScriptTag.parentNode) {
