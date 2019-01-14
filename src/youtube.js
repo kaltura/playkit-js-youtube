@@ -7,10 +7,11 @@ const YOUTUBE_MIMETYPE = 'video/youtube';
 
 const DEFAULT_PLAYER_VARS = {
   controls: 0,
+  origin: window.location.origin,
   iv_load_policy: 3,
   disablekb: 1,
   modestbranding: 1,
-  playsinline: 0,
+  playsinline: 1,
   rel: 0,
   fs: 0
 };
