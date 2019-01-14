@@ -3,6 +3,8 @@ import {EventManager, FakeEventTarget, FakeEvent, EventType} from '@playkit-js/p
 import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack} from '@playkit-js/playkit-js';
 import {Utils, getLogger} from '@playkit-js/playkit-js';
 
+const YOUTUBE_IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
+
 const YOUTUBE_MIMETYPE = 'video/youtube';
 
 const DEFAULT_PLAYER_VARS = {
@@ -944,7 +946,13 @@ class Youtube extends FakeEventTarget implements IEngine {
         return resolve();
       }
       const tag = Utils.Dom.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
+      let url = YOUTUBE_IFRAME_API_URL;
+      if (Utils.Object.hasPropertyPath(this._config, 'playback.options.youtube')) {
+        if (this._config.playback.options.youtube.iframeApi) {
+          url = this._config.playback.options.youtube.iframeApi;
+        }
+      }
+      tag.src = url;
       tag.async = true;
       tag.onload = () => {
         resolve();
