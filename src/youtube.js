@@ -5,6 +5,16 @@ import {Utils, getLogger} from '@playkit-js/playkit-js';
 
 const YOUTUBE_MIMETYPE = 'video/youtube';
 
+const DEFAULT_PLAYER_VARS = {
+  controls: 0,
+  iv_load_policy: 3,
+  disablekb: 1,
+  modestbranding: 1,
+  playsinline: 0,
+  rel: 0,
+  fs: 0
+};
+
 /**
  * Youtube engine for playback.
  * @classdesc
@@ -896,15 +906,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   _loadYouTubePlayer(): void {
     const loadYouTubePlayer = () => {
       const config = {
-        playerVars: {
-          controls: 0,
-          iv_load_policy: 3,
-          disablekb: 1,
-          modestbranding: 1,
-          playsinline: this._config.playback.playsinline ? 1 : 0,
-          rel: 0,
-          fs: 0
-        },
+        playerVars: DEFAULT_PLAYER_VARS,
         events: {
           onReady: this._apiReady,
           onError: this._apiError,
@@ -918,6 +920,7 @@ class Youtube extends FakeEventTarget implements IEngine {
           onVolumeChange: () => this.dispatchEvent(new FakeEvent(EventType.VOLUME_CHANGE))
         }
       };
+      config.playerVars.playsinline = this._config.playback.playsinline ? 1 : 0;
       if (Utils.Object.hasPropertyPath(this._config, 'playback.options.youtube')) {
         const youtubeConfig = this._config.playback.options.youtube;
         Utils.Object.mergeDeep(config.playerVars, youtubeConfig.playerVars);
