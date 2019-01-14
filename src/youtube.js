@@ -911,12 +911,7 @@ class Youtube extends FakeEventTarget implements IEngine {
           onReady: this._apiReady,
           onError: this._apiError,
           onStateChange: e => this._onPlayerStateChange(e),
-          onPlaybackQualityChange: e => {
-            let videoTrack = this._playerTracks.find(track => {
-              return track instanceof VideoTrack && track.label === e.data;
-            });
-            this.dispatchEvent(EventType.VIDEO_TRACK_CHANGED, {selectedVideoTrack: videoTrack})
-          },
+          onPlaybackQualityChange: e => this._onPlaybackQualityChange(e),
           onVolumeChange: () => this.dispatchEvent(new FakeEvent(EventType.VOLUME_CHANGE))
         }
       };
@@ -1000,6 +995,13 @@ class Youtube extends FakeEventTarget implements IEngine {
       case playerState.CUED:
         break;
     }
+  }
+
+  _onPlaybackQualityChange(event: any): void {
+    let videoTrack = this._playerTracks.find(track => {
+      return track instanceof VideoTrack && track.label === event.data;
+    });
+    this.dispatchEvent(EventType.VIDEO_TRACK_CHANGED, {selectedVideoTrack: videoTrack})
   }
 
   _onPlaying() {
