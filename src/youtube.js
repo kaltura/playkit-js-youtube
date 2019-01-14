@@ -1091,6 +1091,14 @@ class Youtube extends FakeEventTarget implements IEngine {
     clearInterval(this._playingIntervalId);
     this._playingIntervalId = null;
   }
+
+  resetAllCues(): void {}
+  enterPictureInPicture(): void {}
+  exitPictureInPicture(): void {}
+  isPictureInPictureSupported(): void {}
+  get isInPictureInPicture(): boolean {
+    return false;
+  }
 }
 
 export {Youtube}
