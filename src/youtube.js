@@ -376,7 +376,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         //TODO: if autoplay pass it here and check in play if already playing?
         const loadOptions = {
           videoId: this._source.url,
-          startSeconds: (startTime > 0) ? startTime : 0
+          startSeconds: (startTime && startTime > 0) ? startTime : 0
         };
         this._api.loadVideoById(loadOptions);
       })
