@@ -7,6 +7,8 @@ const YOUTUBE_IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
 
 const YOUTUBE_MIMETYPE = 'video/youtube';
 
+const TIME_INTERVAL_TIMEOUT = 250;
+
 const DEFAULT_PLAYER_VARS = {
   controls: 0,
   origin: window.location.origin,
@@ -25,10 +27,10 @@ const DEFAULT_PLAYER_VARS = {
 class Youtube extends FakeEventTarget implements IEngine {
   /**
    * The video element.
-   * @type {HTMLVideoElement}
+   * @type {HTMLElement}
    * @private
    */
-  _el: Object;
+  _el: HTMLElement;
   /**
    * The event manager of the engine.
    * @type {EventManager}
@@ -91,14 +93,6 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @static
    */
   static id: string = 'youtube';
-
-  /**
-   * A video element for browsers which block auto play.
-   * @type {HTMLVideoElement}
-   * @private
-   * @static
-   */
-  static _el: HTMLElement;
 
   static isSupported(): boolean {
     return true;
@@ -242,15 +236,6 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   attach(): void {}
-
-  /**
-   * Handles errors from the video element
-   * @returns {void}
-   * @private
-   */
-  _handleVideoError(): void {
-    this.dispatchEvent(new FakeEvent(EventType.ERROR, {}));
-  }
 
   /**
    * Remove the listeners of the video element events.
@@ -499,7 +484,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         this.dispatchEvent(new FakeEvent(EventType.SEEKED));
         this._isSeeking = false;
       }
-    }, 250);
+    }, TIME_INTERVAL_TIMEOUT);
   }
 
   _stopSeekTargetWatchDog() {
@@ -899,11 +884,18 @@ class Youtube extends FakeEventTarget implements IEngine {
         reject(e.data);
       };
     });
+    this._createVideoElement();
     this._loadYouTubeIframeAPI().then(() => {
       this._loadYouTubePlayer();
     }).catch(e => {
       dispatchError(e);
     });
+  }
+
+  _createVideoElement() {
+    const el = (this._el = Utils.Dom.createElement('div'));
+    Utils.Dom.setAttribute(el, 'id', Utils.Generator.uniqueId(5));
+    Utils.Dom.setAttribute(el, 'tabindex', '-1');
   }
 
   _getYoutubeErrorCodeData(errorNumber: number): {code: number, message: string} {
@@ -991,8 +983,6 @@ class Youtube extends FakeEventTarget implements IEngine {
       if (firstScriptTag && firstScriptTag.parentNode) {
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       }
-      this._el = tag;
-      this._el.id = Utils.Generator.uniqueId(5);
     });
   }
 
@@ -1084,7 +1074,7 @@ class Youtube extends FakeEventTarget implements IEngine {
       if (!this._isSeeking) {
         this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
       }
-    }, 250);
+    }, TIME_INTERVAL_TIMEOUT);
   }
 
   _stopPlayingWatchDog() {
