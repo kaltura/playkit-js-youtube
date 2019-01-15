@@ -81,13 +81,6 @@ class Youtube extends FakeEventTarget implements IEngine {
   static _logger: any = getLogger('Youtube');
 
   /**
-   * The Youtube capabilities handlers.
-   * @private
-   * @static
-   */
-  static _capabilities: Array<typeof ICapability> = [];
-
-  /**
    * @type {string} - The engine id.
    * @public
    * @static
@@ -324,11 +317,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    * @public
    */
-  seekToLiveEdge(): void {
-    if (this._api) {
-      this._api.seekTo(this._api.getDuration()); //TODO: need to check this
-    }
-  }
+  seekToLiveEdge(): void {}
 
   /**
    * Get the start time of DVR window in live playback in seconds.
@@ -336,7 +325,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   getStartTimeOfDvrWindow(): number {
-    return this._api ? this._api.getDuration() : 0; //TODO: need to fix this
+    return 0;
   }
 
   /**
@@ -346,7 +335,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   isLive(): boolean {
-    return false; //TODO: how to know this? https://developers.google.com/youtube/2.0/developers_guide_protocol_retrieving_live_events?
+    return false;
   }
 
   /**
