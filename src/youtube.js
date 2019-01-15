@@ -376,7 +376,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         //TODO: if autoplay pass it here and check in play if already playing?
         const loadOptions = {
           videoId: this._source.url,
-          startSeconds: (startTime && startTime > 0) ? startTime : 0
+          startSeconds: (startTime > 0) ? startTime : 0
         };
         this._api.loadVideoById(loadOptions);
       })
@@ -392,7 +392,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   /**
-   * Parse hls video tracks into player video tracks.
+   * Parse youtube video tracks into player video tracks.
    * @returns {Array<VideoTrack>} - The parsed video tracks.
    * @private
    */
