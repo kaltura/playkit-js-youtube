@@ -27,10 +27,10 @@ const DEFAULT_PLAYER_VARS = {
 class Youtube extends FakeEventTarget implements IEngine {
   /**
    * The video element.
-   * @type {HTMLElement}
+   * @type {HTMLVideoElement}
    * @private
    */
-  _el: HTMLElement;
+  _el: HTMLVideoElement;
   /**
    * The event manager of the engine.
    * @type {EventManager}
