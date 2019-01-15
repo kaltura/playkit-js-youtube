@@ -403,7 +403,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   /**
-   * Parse hls video tracks into player video tracks.
+   * Parse youtube video tracks into player video tracks.
    * @returns {Array<VideoTrack>} - The parsed video tracks.
    * @private
    */
