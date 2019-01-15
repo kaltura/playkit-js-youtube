@@ -1,0 +1,102 @@
+{
+  "name": "@playkit-js/playkit-js-youtube",
+  "version": "1.0.0-alpha.1",
+  "main": "dist/playkit-youtube.js",
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production webpack",
+    "dev": "webpack-dev-server",
+    "watch": "webpack --progress --colors --watch",
+    "test": "NODE_ENV=test karma start --color",
+    "release": "standard-version",
+    "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
+    "eslint": "eslint . --color",
+    "flow": "flow check",
+    "commit:dist": "git add --force --all dist && (git commit -m 'chore: update dist' || exit 0)",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{json,md,scss}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@playkit-js/playkit-js": "^0.37.0",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-istanbul": "^4.0.0",
+    "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-register": "^6.23.0",
+    "chai": "^3.5.0",
+    "cross-env": "^3.1.4",
+    "eslint": "^3.10.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-mocha-no-only": "^0.0.5",
+    "eslint-plugin-prettier": "^2.6.2",
+    "flow-bin": "0.53.1",
+    "husky": "^0.14.3",
+    "istanbul": "^0.4.5",
+    "karma": "^1.5.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.2",
+    "lint-staged": "^7.2.0",
+    "mocha": "^3.2.0",
+    "mocha-cli": "^1.0.1",
+    "prettier": "^1.13.7",
+    "sinon": "^2.0.0",
+    "sinon-chai": "^2.8.0",
+    "standard-version": "^4.0.0",
+    "uglifyjs-webpack-plugin": "^0.4.3",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "2.4.2"
+  },
+  "peerDependencies": {
+    "@playkit-js/playkit-js": "^0.37.0"
+  },
+  "keywords": [
+    "kaltura",
+    "youtube",
+    "mse",
+    "player",
+    "playkit-js",
+    "playkit-js-youtube",
+    "html5 player"
+  ],
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaltura/playkit-js-youtube.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaltura/playkit-js-youtube/issues"
+  },
+  "homepage": "https://github.com/kaltura/playkit-js-youtube#readme",
+  "kcc": {
+    "name": "playkit-youtube"
+  }
+}
