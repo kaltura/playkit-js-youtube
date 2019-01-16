@@ -506,7 +506,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get volume(): number {
-    return this._api.getVolume() / 100;
+    return this._api ? this._api.getVolume() / 100 : 1;
   }
 
   ready() {}
