@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/playkit-js-youtube",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "main": "dist/playkit-youtube.js",
   "scripts": {
     "clean": "rm -rf ./dist",
