@@ -487,7 +487,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get duration(): number {
-    return this._api ? this._api.getDuration() : NaN;
+    return this._api && this._api.getDuration ? this._api.getDuration() : NaN;
   }
 
   /**
