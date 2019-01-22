@@ -1047,17 +1047,20 @@ class Youtube extends FakeEventTarget implements IEngine {
       this._isSeeking = false;
     }
     this._stopPlayingWatchDog();
+    this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
 
   _onEnded() {
     this._stopPlayingWatchDog();
+    this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
     this.dispatchEvent(new FakeEvent(EventType.ENDED));
   }
 
   _startPlayingWatchDog() {
     this._stopPlayingWatchDog();
+    this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
     this._playingIntervalId = setInterval(() => {
       if (!this._isSeeking) {
         this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
@@ -1066,7 +1069,6 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   _stopPlayingWatchDog() {
-    this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
     clearInterval(this._playingIntervalId);
     this._playingIntervalId = null;
   }
