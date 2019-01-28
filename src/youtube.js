@@ -158,6 +158,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   constructor(source: PKMediaSourceObject, config: Object) {
     super();
     this._eventManager = new EventManager();
+    this._createVideoElement();
     this._init(source, config);
   }
 
@@ -181,8 +182,8 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._stopSeekTargetWatchDog();
     this._stopPlayingWatchDog();
     this.detach();
-    if (this._api) {
-      this._api.stopVideo();
+    if (this._playerReady()) {
+      this._api.stopVideo && this._api.stopVideo();
     }
     this._loaded = false;
     this._firstPlaying = true;
@@ -209,7 +210,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   destroy(): void {
     this._reset();
     if (this._api) {
-      this._api.destroy();
+      this._api.destroy && this._api.destroy();
     }
     this._eventManager.destroy();
   }
@@ -370,7 +371,6 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {Promise<Object>} - The loaded data
    */
   load(startTime: ?number): Promise<Object> {
-    this._loaded = true;
     this._sdkLoaded
       .then(() => {
         //TODO: if autoplay pass it here and check in play if already playing?
@@ -378,7 +378,8 @@ class Youtube extends FakeEventTarget implements IEngine {
           videoId: this._source.url,
           startSeconds: (startTime && startTime > 0) ? startTime : 0
         };
-        this._api.loadVideoById(loadOptions);
+        this._api.cueVideoById(loadOptions);
+        this._loaded = true;
       })
       .catch(error => {
         return Promise.reject(error);
@@ -389,6 +390,10 @@ class Youtube extends FakeEventTarget implements IEngine {
       this._videoLoaded.reject = reject;
     });
     return this._videoLoaded.promise;
+  }
+
+  _playerReady(): boolean {
+    return !!(this._api && this._loaded);
   }
 
   /**
@@ -440,7 +445,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get currentTime(): number {
-    return this._api ? this._api.getCurrentTime() : 0;
+    return this._playerReady() ? this._api.getCurrentTime() : 0;
   }
 
   /**
@@ -487,7 +492,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get duration(): number {
-    return this._api && this._api.getDuration ? this._api.getDuration() : NaN;
+    return this._playerReady() ? this._api.getDuration() : NaN;
   }
 
   /**
@@ -497,7 +502,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   set volume(vol: number): void {
-    this._api && this._api.setVolume(vol * 100);
+    this._playerReady() && this._api.setVolume(vol * 100);
   }
 
   /**
@@ -506,7 +511,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get volume(): number {
-    return this._api ? this._api.getVolume() / 100 : 1;
+    return this._playerReady() ? this._api.getVolume() / 100 : 1;
   }
 
   ready() {}
@@ -517,7 +522,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get paused(): boolean {
-    if (this._api && this._api.getPlayerState) {
+    if (this._playerReady()) {
       return ![window.YT.PlayerState.PLAYING, window.YT.PlayerState.BUFFERING].includes(this._api.getPlayerState());
     } else {
       return true;
@@ -591,7 +596,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   set muted(mute: boolean): void {
-    this._api && (mute ? this._api.mute() : this._api.unMute());
+    this._playerReady() && (mute ? this._api.mute() : this._api.unMute());
   }
 
   /**
@@ -600,7 +605,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get muted(): boolean {
-    return this._api && this._api.isMuted() || false;
+    return this._playerReady() && this._api.isMuted() || false;
   }
 
   /**
@@ -715,7 +720,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get playbackRate(): number {
-    return this._api ? this._api.getPlaybackRate() : 1;
+    return this._playerReady() ? this._api.getPlaybackRate() : 1;
   }
 
   /**
@@ -741,7 +746,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get ended(): boolean {
-    return this._api ? this._api.getPlayerState() === window.YT.PlayerState.ENDED : false;
+    return this._playerReady() ? this._api.getPlayerState() === window.YT.PlayerState.ENDED : false;
   }
 
   /**
@@ -758,7 +763,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get networkState(): number {
-    if (!(this._api && this._api.getPlayerState)) {
+    if (!(this._playerReady())) {
       return 0;
     }
     const playerState = window.YT.PlayerState;
@@ -843,7 +848,14 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @return {number[]} - playback rates
    */
   get playbackRates(): Array<number> {
-    return this._api ? this._api.getAvailablePlaybackRates() : Youtube.PLAYBACK_RATES;
+    let playbackRates = Youtube.PLAYBACK_RATES;
+    if (this._playerReady()) {
+      const rates = this._api.getAvailablePlaybackRates();
+      if (rates && Array.isArray(rates)) {
+        playbackRates = rates;
+      }
+    }
+    return playbackRates;
   }
 
   /**
@@ -873,7 +885,6 @@ class Youtube extends FakeEventTarget implements IEngine {
         reject(e.data);
       };
     });
-    this._createVideoElement();
     this._loadYouTubeIframeAPI().then(() => {
       this._loadYouTubePlayer();
     }).catch(e => {
@@ -991,6 +1002,7 @@ class Youtube extends FakeEventTarget implements IEngine {
 
     switch( this._currentState ){
       case playerState.UNSTARTED:
+        this._handleLoaded();
         break;
       case playerState.ENDED:
         this._onEnded();
@@ -1030,11 +1042,16 @@ class Youtube extends FakeEventTarget implements IEngine {
     }
   }
 
+  _handleLoaded() {
+    if (this._loaded) {
+      this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
+      this._videoLoaded.resolve({tracks: this._playerTracks});
+    }
+  }
+
   _handleFirstPlaying() {
     this._firstPlaying = false;
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
-    this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
-    this._videoLoaded.resolve({tracks: this._playerTracks});
   }
 
   _onBuffering() {
