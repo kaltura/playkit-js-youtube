@@ -1,6 +1,7 @@
 # PlayKit JS YouTube - YouTube Engine for the [PlayKit JS Player]
 
-[![Build Status](https://travis-ci.com/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.com/kaltura/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/latest.svg)]([NPM])[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/canary.svg)]([NPM_CANARY])
+[![Build Status](https://travis-ci.com/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.com/kaltura/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube/v/canary
+)
 
 PlayKit JS YouTube Engine integrates youtube with the [PlayKit JS Player].
  
@@ -10,8 +11,6 @@ PlayKit JS YouTube is written in [ECMAScript6], statically analysed using [Flow]
 [Flow]: https://flow.org/
 [ECMAScript6]: https://github.com/ericdouglas/ES6-Learning#articles--tutorials
 [Babel]: https://babeljs.io
-[NPM]: https://www.npmjs.com/package/@playkit-js/playkit-js-youtube
-[NPM_CANARY]: https://www.npmjs.com/package/@playkit-js/playkit-js-youtube/v/canary
 
 ## Getting Started
 
