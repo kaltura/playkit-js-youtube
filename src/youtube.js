@@ -1052,7 +1052,6 @@ class Youtube extends FakeEventTarget implements IEngine {
   _handleFirstPlaying() {
     this._firstPlaying = false;
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
-    this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
   }
 
   _onBuffering() {
