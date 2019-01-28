@@ -1,6 +1,6 @@
 # PlayKit JS YouTube - YouTube Engine for the [PlayKit JS Player]
 
-[![Build Status](https://travis-ci.com/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.com/kaltura/playkit-js-youtube)
+[![Build Status](https://travis-ci.com/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.com/kaltura/playkit-js-youtube)|![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/latest.svg)![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/canary.svg)
 
 PlayKit JS YouTube Engine integrates youtube with the [PlayKit JS Player].
  
