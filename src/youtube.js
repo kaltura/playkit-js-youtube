@@ -1,7 +1,7 @@
 //@flow
 import {EventManager, FakeEventTarget, FakeEvent, EventType, Error} from '@playkit-js/playkit-js';
 import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack} from '@playkit-js/playkit-js';
-import {Utils, getLogger} from '@playkit-js/playkit-js';
+import {Utils, getLogger, Env} from '@playkit-js/playkit-js';
 
 const YOUTUBE_IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
 
@@ -9,8 +9,9 @@ const YOUTUBE_MIMETYPE = 'video/youtube';
 
 const TIME_INTERVAL_TIMEOUT = 250;
 
-const DEFAULT_PLAYER_VARS = {
+const DEFAULT_PLAYER_VARS: {[var: string]: number | string} = {
   controls: 0,
+  autoplay: 0,
   origin: window.location.origin,
   iv_load_policy: 3,
   disablekb: 1,
@@ -131,7 +132,18 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @static
    */
   static getCapabilities(): Promise<Object> {
-    return Promise.resolve({[Youtube.id]: {autoplay: true, mutedAutoPlay: true}});
+    let dataSaver = false;
+    if ("connection" in navigator && navigator.connection) {
+      // $FlowFixMe
+      dataSaver = !!navigator.connection.saveData;
+    }
+    const capabilities = {
+      [Youtube.id]: {
+        autoplay: !Env.device.type,
+        mutedAutoPlay: !dataSaver
+      }
+    };
+    return Promise.resolve(capabilities);
   }
 
   /**
@@ -596,7 +608,12 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   set muted(mute: boolean): void {
-    this._playerReady() && (mute ? this._api.mute() : this._api.unMute());
+    if (this._playerReady()) {
+      mute ?
+        this._api.mute() :
+        this._api.unMute();
+      this._muted = mute;
+    }
   }
 
   /**
@@ -605,7 +622,11 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get muted(): boolean {
-    return this._playerReady() && this._api.isMuted() || false;
+    let muted = false;
+    if (this._playerReady()) {
+      muted = (typeof this._muted === 'boolean') ? this._muted : this._api.isMuted();
+    }
+    return muted;
   }
 
   /**
@@ -874,8 +895,9 @@ class Youtube extends FakeEventTarget implements IEngine {
     };
     this._sdkLoaded = new Promise((resolve, reject) => {
       this._apiReady = () => {
-        if (this._config.playback.muted) {
-          this.muted = true;
+        if (this._config.playback.muted || (this._config.playback.autoplay && Env.device.type)) {
+          this._api.mute && this._api.mute();
+          this._muted = true;
         }
         resolve();
       };
@@ -938,6 +960,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         }
       };
       config.playerVars.playsinline = this._config.playback.playsinline ? 1 : 0;
+      config.playerVars.autoplay = this._config.playback.autoplay ? 1 : 0;
       if (Utils.Object.hasPropertyPath(this._config, 'playback.options.youtube')) {
         const youtubeConfig = this._config.playback.options.youtube;
         Utils.Object.mergeDeep(config.playerVars, youtubeConfig.playerVars);
