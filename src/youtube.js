@@ -132,10 +132,15 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @static
    */
   static getCapabilities(): Promise<Object> {
+    let dataSaver = false;
+    if ("connection" in navigator && navigator.connection) {
+      // $FlowFixMe
+      dataSaver = !!navigator.connection.saveData;
+    }
     const capabilities = {
       [Youtube.id]: {
         autoplay: false,
-        mutedAutoPlay: true
+        mutedAutoPlay: !dataSaver
       }
     };
     return Promise.resolve(capabilities);
@@ -888,7 +893,7 @@ class Youtube extends FakeEventTarget implements IEngine {
     };
     this._sdkLoaded = new Promise((resolve, reject) => {
       this._apiReady = () => {
-        if (this._config.playback.muted || (this._config.playback.autoplay)) {
+        if (this._config.playback.muted || this._config.playback.autoplay) {
           this._api.mute && this._api.mute();
           this._muted = true;
         }
