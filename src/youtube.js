@@ -1,7 +1,7 @@
 //@flow
 import {EventManager, FakeEventTarget, FakeEvent, EventType, Error} from '@playkit-js/playkit-js';
 import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack} from '@playkit-js/playkit-js';
-import {Utils, getLogger, Env} from '@playkit-js/playkit-js';
+import {Utils, getLogger} from '@playkit-js/playkit-js';
 
 const YOUTUBE_IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
 
@@ -139,7 +139,7 @@ class Youtube extends FakeEventTarget implements IEngine {
     }
     const capabilities = {
       [Youtube.id]: {
-        autoplay: !Env.device.type,
+        autoplay: false,
         mutedAutoPlay: !dataSaver
       }
     };
@@ -526,8 +526,6 @@ class Youtube extends FakeEventTarget implements IEngine {
     return this._playerReady() ? this._api.getVolume() / 100 : 1;
   }
 
-  ready() {}
-
   /**
    * Get paused state.
    * @returns {boolean} - The paused value of the video element.
@@ -895,7 +893,7 @@ class Youtube extends FakeEventTarget implements IEngine {
     };
     this._sdkLoaded = new Promise((resolve, reject) => {
       this._apiReady = () => {
-        if (this._config.playback.muted || (this._config.playback.autoplay && Env.device.type)) {
+        if (this._config.playback.muted || this._config.playback.autoplay) {
           this._api.mute && this._api.mute();
           this._muted = true;
         }
