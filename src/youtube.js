@@ -1118,6 +1118,14 @@ class Youtube extends FakeEventTarget implements IEngine {
   get isInPictureInPicture(): boolean {
     return false;
   }
+
+  get targetBuffer(): number {
+    return NaN;
+  }
+
+  get availableBuffer(): number {
+    return NaN;
+  }
 }
 
 export {Youtube}
