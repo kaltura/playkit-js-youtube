@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+
+# [1.1.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.0.5...v1.1.0) (2019-06-17)
+
+### Features
+
+- **FEC-8975:** empty implementation of targetBuffer and available buffer ([#9](https://github.com/kaltura/playkit-js-youtube/issues/9)) ([e46db51](https://github.com/kaltura/playkit-js-youtube/commit/e46db51))
+
 <a name="1.0.5"></a>
 
 ## [1.0.5](https://github.com/kaltura/playkit-js-youtube/compare/v1.0.4...v1.0.5) (2019-04-11)
