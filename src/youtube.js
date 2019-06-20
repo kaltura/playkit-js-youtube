@@ -1114,7 +1114,9 @@ class Youtube extends FakeEventTarget implements IEngine {
   resetAllCues(): void {}
   enterPictureInPicture(): void {}
   exitPictureInPicture(): void {}
-  isPictureInPictureSupported(): void {}
+  isPictureInPictureSupported(): boolean {
+    return false;
+  }
   get isInPictureInPicture(): boolean {
     return false;
   }
