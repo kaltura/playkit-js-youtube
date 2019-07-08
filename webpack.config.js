@@ -19,7 +19,7 @@ module.exports = {
     filename: '[name].js',
     library: ['playkit', 'engines', 'youtube'],
     libraryTarget: 'umd',
-    devtoolModuleFilenameTemplate: './engines/youtube/[resource-path]',
+    devtoolModuleFilenameTemplate: './playkit/engines/youtube/[resource-path]',
   },
   devtool: 'source-map',
   plugins: plugins,
