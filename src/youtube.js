@@ -1,6 +1,7 @@
 //@flow
 import {EventManager, FakeEventTarget, FakeEvent, EventType, Error} from '@playkit-js/playkit-js';
-import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack, Utils, getLogger} from '@playkit-js/playkit-js';
+import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack} from '@playkit-js/playkit-js';
+import {Utils, getLogger} from '@playkit-js/playkit-js';
 
 const YOUTUBE_IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
 
