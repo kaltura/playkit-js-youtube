@@ -332,6 +332,10 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   seekToLiveEdge(): void {}
 
+  attachMediaSource(): void {}
+
+  detachMediaSource(): void {}
+
   /**
    * Get the start time of DVR window in live playback in seconds.
    * @returns {Number} - start time of DVR window.
