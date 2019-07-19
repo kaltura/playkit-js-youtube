@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+
+# [1.2.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.1.0...v1.2.0) (2019-07-19)
+
+### Features
+
+- **FEC-9227:** support reInit of MSE ([#11](https://github.com/kaltura/playkit-js-youtube/issues/11)) ([8a7961f](https://github.com/kaltura/playkit-js-youtube/commit/8a7961f))
+
 <a name="1.1.0"></a>
 
 # [1.1.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.0.5...v1.1.0) (2019-06-17)
