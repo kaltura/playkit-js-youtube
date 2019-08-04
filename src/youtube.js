@@ -55,7 +55,7 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   _source: PKMediaSourceObject;
 
-  _api: Object;
+  _api: any;
 
   _sdkLoaded: Promise<*>;
 
