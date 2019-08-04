@@ -55,7 +55,7 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   _source: PKMediaSourceObject;
 
-  _api: Object;
+  _api: any;
 
   _sdkLoaded: Promise<*>;
 
@@ -498,8 +498,10 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   _stopSeekTargetWatchDog() {
-    clearInterval(this._seekTargetIntervalId);
-    this._seekTargetIntervalId = null;
+    if(this._seekTargetIntervalId) {
+      clearInterval(this._seekTargetIntervalId);
+      this._seekTargetIntervalId = null;
+    }
   }
 
   /**
@@ -891,6 +893,9 @@ class Youtube extends FakeEventTarget implements IEngine {
   _init(source: PKMediaSourceObject, config: Object): void {
     this._source = source;
     this._config = config;
+    this._api = null;
+    this._videoLoaded = null;
+    this._playingIntervalId = null;
     const dispatchError = e => {
       const error = new Error(Error.Severity.CRITICAL, Error.Category.PLAYER, Error.Code.LOAD_FAILED, e);
       this.dispatchEvent(new FakeEvent(EventType.ERROR, error));
