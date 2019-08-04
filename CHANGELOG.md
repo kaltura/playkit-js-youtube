@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.1"></a>
+
+## [1.2.1](https://github.com/kaltura/playkit-js-youtube/compare/v1.2.0...v1.2.1) (2019-08-04)
+
+### Bug Fixes
+
+- **FEC-9275:** youtube entry failed to play on IE11 ([#12](https://github.com/kaltura/playkit-js-youtube/issues/12)) ([3865264](https://github.com/kaltura/playkit-js-youtube/commit/3865264))
+
 <a name="1.2.0"></a>
 
 # [1.2.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.1.0...v1.2.0) (2019-07-19)
