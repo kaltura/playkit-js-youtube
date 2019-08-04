@@ -498,8 +498,10 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   _stopSeekTargetWatchDog() {
-    clearInterval(this._seekTargetIntervalId);
-    this._seekTargetIntervalId = null;
+    if(this._seekTargetIntervalId) {
+      clearInterval(this._seekTargetIntervalId);
+      this._seekTargetIntervalId = null;
+    }
   }
 
   /**
