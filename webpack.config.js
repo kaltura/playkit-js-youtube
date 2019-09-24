@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 const webpack = require("webpack");
 const path = require("path");
-const PROD = process.env.NODE_ENV === "production";
+const PROD = (process.env.NODE_ENV === 'production');
 const packageData = require("./package.json");
 
 let plugins = [
@@ -13,48 +13,45 @@ let plugins = [
 ];
 
 if (PROD) {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({ sourceMap: true }));
+  plugins.push(new webpack.optimize.UglifyJsPlugin({sourceMap: true}));
 }
 
 module.exports = {
   context: __dirname + "/src",
-  entry: { "playkit-youtube": "index.js" },
+  entry: {"playkit-youtube": "index.js"},
   output: {
     path: __dirname + "/dist",
-    filename: "[name].js",
+    filename: '[name].js',
     library: ["playkit", "youtube"],
     libraryTarget: "umd",
-    devtoolModuleFilenameTemplate: "./youtube/[resource-path]"
+    devtoolModuleFilenameTemplate: "./youtube/[resource-path]",
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   plugins: plugins,
   module: {
-    rules: [
-      {
-        test: /\.js$/,
-        use: [
-          {
-            loader: "babel-loader"
+    rules: [{
+      test: /\.js$/,
+      use: [{
+        loader: "babel-loader"
+      }],
+      exclude: [
+        /node_modules/
+      ]
+    }, {
+      test: /\.js$/,
+      exclude: [
+        /node_modules/
+      ],
+      enforce: 'pre',
+      use: [{
+        loader: 'eslint-loader',
+        options: {
+          rules: {
+            semi: 0
           }
-        ],
-        exclude: [/node_modules/]
-      },
-      {
-        test: /\.js$/,
-        exclude: [/node_modules/],
-        enforce: "pre",
-        use: [
-          {
-            loader: "eslint-loader",
-            options: {
-              rules: {
-                semi: 0
-              }
-            }
-          }
-        ]
-      },
-      {
+        }
+      }]
+    }, {
         test: /\.css$/,
         use: [
           {
@@ -64,14 +61,18 @@ module.exports = {
             loader: "css-loader"
           }
         ]
-      }
-    ]
+      }]
   },
   devServer: {
-    contentBase: __dirname + "/src"
+    contentBase: __dirname + "/src",
+    host: '192.168.2.29',
+    port: 3001
   },
   resolve: {
-    modules: [path.resolve(__dirname, "src"), "node_modules"]
+    modules: [
+      path.resolve(__dirname, "src"),
+      "node_modules"
+    ]
   },
   externals: {
     "@playkit-js/playkit-js": {
