@@ -51,7 +51,17 @@ module.exports = {
           }
         }
       }]
-    }]
+    }, {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader"
+          }
+        ]
+      }]
   },
   devServer: {
     contentBase: __dirname + "/src"
