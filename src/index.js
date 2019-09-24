@@ -1,6 +1,7 @@
 // @flow
 import {registerEngine} from '@playkit-js/playkit-js';
 import {Youtube} from './youtube';
+import './style.css';
 
 declare var __VERSION__: string;
 declare var __NAME__: string;

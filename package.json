@@ -42,6 +42,7 @@
     "babel-register": "^6.23.0",
     "chai": "^3.5.0",
     "cross-env": "^3.1.4",
+    "css-loader": "0.28.4",
     "eslint": "^3.10.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-loader": "^1.6.1",
@@ -71,6 +72,7 @@
     "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0",
     "standard-version": "^4.0.0",
+    "style-loader": "0.18.2",
     "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^3.6.0",
     "webpack-dev-server": "2.4.2"
