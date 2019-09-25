@@ -1,4 +1,4 @@
 .playkit-iOS .playkit-engine-youtube,
-.playkit-Mac-OS.playkit-touch .playkit-engine-youtube{
+.playkit-Mac-OS.playkit-Safari .playkit-engine-youtube{
   object-fit: fill;
 }
