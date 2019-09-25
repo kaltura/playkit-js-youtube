@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.2"></a>
+
+## [1.2.2](https://github.com/kaltura/playkit-js-youtube/compare/v1.2.1...v1.2.2) (2019-09-25)
+
+### Bug Fixes
+
+- **FEC-8821:** css fullscreen doesn't work with youtube iframe ([#14](https://github.com/kaltura/playkit-js-youtube/issues/14)) ([d32a45c](https://github.com/kaltura/playkit-js-youtube/commit/d32a45c))
+- **FEC-8821:** Safari doesn't show correctly youtube iframe ([#15](https://github.com/kaltura/playkit-js-youtube/issues/15)) ([c10b4ce](https://github.com/kaltura/playkit-js-youtube/commit/c10b4ce))
+
 <a name="1.2.1"></a>
 
 ## [1.2.1](https://github.com/kaltura/playkit-js-youtube/compare/v1.2.0...v1.2.1) (2019-08-04)
