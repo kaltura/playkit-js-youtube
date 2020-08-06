@@ -1,6 +1,6 @@
-import chai from 'chai';
-import sinonChai from 'sinon-chai';
-import sinon from 'sinon/pkg/sinon';
+import chai from "chai";
+import sinonChai from "sinon-chai";
+import sinon from "sinon/pkg/sinon";
 
 /**
  * @returns {void}
