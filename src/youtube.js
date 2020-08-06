@@ -1,15 +1,26 @@
 //@flow
-import {EventManager, FakeEventTarget, FakeEvent, EventType, Error} from '@playkit-js/playkit-js';
-import {Track, VideoTrack, AudioTrack, TextTrack as PKTextTrack} from '@playkit-js/playkit-js';
-import {Utils, getLogger} from '@playkit-js/playkit-js';
+import {
+  EventManager,
+  FakeEventTarget,
+  FakeEvent,
+  EventType,
+  Error,
+} from "@playkit-js/playkit-js";
+import {
+  Track,
+  VideoTrack,
+  AudioTrack,
+  TextTrack as PKTextTrack,
+} from "@playkit-js/playkit-js";
+import { Utils, getLogger } from "@playkit-js/playkit-js";
 
-const YOUTUBE_IFRAME_API_URL = 'https://www.youtube.com/iframe_api';
+const YOUTUBE_IFRAME_API_URL = "https://www.youtube.com/iframe_api";
 
-const YOUTUBE_MIMETYPE = 'video/youtube';
+const YOUTUBE_MIMETYPE = "video/youtube";
 
 const TIME_INTERVAL_TIMEOUT = 250;
 
-const DEFAULT_PLAYER_VARS: {[var: string]: number | string} = {
+const DEFAULT_PLAYER_VARS: { [var: string]: number | string } = {
   controls: 0,
   autoplay: 0,
   origin: window.location.origin,
@@ -18,7 +29,7 @@ const DEFAULT_PLAYER_VARS: {[var: string]: number | string} = {
   modestbranding: 1,
   playsinline: 1,
   rel: 0,
-  fs: 0
+  fs: 0,
 };
 
 /**
@@ -79,14 +90,14 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @static
    * @private
    */
-  static _logger: any = getLogger('Youtube');
+  static _logger: any = getLogger("Youtube");
 
   /**
    * @type {string} - The engine id.
    * @public
    * @static
    */
-  static id: string = 'youtube';
+  static id: string = "youtube";
 
   static isSupported(): boolean {
     return true;
@@ -112,8 +123,16 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @static
    */
   static canPlaySource(source: PKMediaSourceObject): boolean {
-    let canPlayType = typeof source.mimetype === 'string' ? source.mimetype.toLowerCase() === YOUTUBE_MIMETYPE : false;
-    Youtube._logger.debug('canPlayType result for mimeType: ' + source.mimetype + ' is ' + canPlayType.toString());
+    let canPlayType =
+      typeof source.mimetype === "string"
+        ? source.mimetype.toLowerCase() === YOUTUBE_MIMETYPE
+        : false;
+    Youtube._logger.debug(
+      "canPlayType result for mimeType: " +
+        source.mimetype +
+        " is " +
+        canPlayType.toString()
+    );
     return canPlayType;
   }
 
@@ -140,8 +159,8 @@ class Youtube extends FakeEventTarget implements IEngine {
     const capabilities = {
       [Youtube.id]: {
         autoplay: false,
-        mutedAutoPlay: !dataSaver
-      }
+        mutedAutoPlay: !dataSaver,
+      },
     };
     return Promise.resolve(capabilities);
   }
@@ -153,7 +172,9 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   static prepareVideoElement(): void {
-    Youtube._logger.debug('Prepare the video element for playing not supported');
+    Youtube._logger.debug(
+      "Prepare the video element for playing not supported"
+    );
   }
 
   /**
@@ -265,9 +286,12 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   selectVideoTrack(videoTrack: VideoTrack): void {
     if (this._api) {
-      if (videoTrack instanceof VideoTrack && (!videoTrack.active || this.isAdaptiveBitrateEnabled()) ) {
+      if (
+        videoTrack instanceof VideoTrack &&
+        (!videoTrack.active || this.isAdaptiveBitrateEnabled())
+      ) {
         if (this.isAdaptiveBitrateEnabled()) {
-          this.dispatchEvent(EventType.ABR_MODE_CHANGED, {mode: 'manual'});
+          this.dispatchEvent(EventType.ABR_MODE_CHANGED, { mode: "manual" });
         }
         this._isAdaptiveBitrate = false;
         this._api.setPlaybackQuality(videoTrack.label);
@@ -281,7 +305,10 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   selectAudioTrack(audioTrack: AudioTrack): void {
-    Youtube._logger.info(`audio track switching not supported, cannot switch to ` + audioTrack.language);
+    Youtube._logger.info(
+      `audio track switching not supported, cannot switch to ` +
+        audioTrack.language
+    );
   }
 
   /**
@@ -290,7 +317,10 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   selectTextTrack(textTrack: PKTextTrack): void {
-    Youtube._logger.info(`text track switching not supported, cannot switch to ` + textTrack.language);
+    Youtube._logger.info(
+      `text track switching not supported, cannot switch to ` +
+        textTrack.language
+    );
   }
 
   /**
@@ -309,7 +339,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   enableAdaptiveBitrate(): void {
     if (this._api) {
-      this._api.setPlaybackQuality('default');
+      this._api.setPlaybackQuality("default");
       this._isAdaptiveBitrate = true;
     }
   }
@@ -392,12 +422,12 @@ class Youtube extends FakeEventTarget implements IEngine {
         //TODO: if autoplay pass it here and check in play if already playing?
         const loadOptions = {
           videoId: this._source.url,
-          startSeconds: (startTime && startTime > 0) ? startTime : 0
+          startSeconds: startTime && startTime > 0 ? startTime : 0,
         };
         this._api.cueVideoById(loadOptions);
         this._loaded = true;
       })
-      .catch(error => {
+      .catch((error) => {
         return Promise.reject(error);
       });
     this._videoLoaded = {};
@@ -417,7 +447,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {Array<VideoTrack>} - The parsed video tracks.
    * @private
    */
-  _parseVideoTracks(): Array<VideoTrack>{
+  _parseVideoTracks(): Array<VideoTrack> {
     const levels: Array<string> = this._api.getAvailableQualityLevels();
     const currentLevel: string = this._api.getPlaybackQuality();
     const videoTracks = [];
@@ -426,10 +456,10 @@ class Youtube extends FakeEventTarget implements IEngine {
         active: currentLevel === level,
         label: level,
         bandwidth: 0,
-        width: i+1, //TODO: get estimated width and height from https://developers.google.com/youtube/iframe_api_reference#Playback_quality
-        height: i+1,
-        language: '',
-        index: i
+        width: i + 1, //TODO: get estimated width and height from https://developers.google.com/youtube/iframe_api_reference#Playback_quality
+        height: i + 1,
+        language: "",
+        index: i,
       };
       videoTracks.push(new VideoTrack(settings));
     });
@@ -452,7 +482,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get src(): string {
-    return (this._loaded && this._source) ? this._source.url: "";
+    return this._loaded && this._source ? this._source.url : "";
   }
 
   /**
@@ -498,7 +528,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   _stopSeekTargetWatchDog() {
-    if(this._seekTargetIntervalId) {
+    if (this._seekTargetIntervalId) {
       clearInterval(this._seekTargetIntervalId);
       this._seekTargetIntervalId = null;
     }
@@ -539,7 +569,10 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   get paused(): boolean {
     if (this._playerReady()) {
-      return ![window.YT.PlayerState.PLAYING, window.YT.PlayerState.BUFFERING].includes(this._api.getPlayerState());
+      return ![
+        window.YT.PlayerState.PLAYING,
+        window.YT.PlayerState.BUFFERING,
+      ].includes(this._api.getPlayerState());
     } else {
       return true;
     }
@@ -566,8 +599,8 @@ class Youtube extends FakeEventTarget implements IEngine {
         return 0;
       },
       end: () => {
-        return this._api? this.currentTime : 0;
-      }
+        return this._api ? this.currentTime : 0;
+      },
     };
   }
 
@@ -583,8 +616,8 @@ class Youtube extends FakeEventTarget implements IEngine {
         return 0;
       },
       end: () => {
-        return this._api? this.currentTime : 0;
-      }
+        return this._api ? this.currentTime : 0;
+      },
     };
   }
 
@@ -600,8 +633,10 @@ class Youtube extends FakeEventTarget implements IEngine {
         return 0;
       },
       end: () => {
-        return this._api? this._api.getVideoLoadedFraction() * this.duration : 0;
-      }
+        return this._api
+          ? this._api.getVideoLoadedFraction() * this.duration
+          : 0;
+      },
     };
   }
 
@@ -613,9 +648,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   set muted(mute: boolean): void {
     if (this._playerReady()) {
-      mute ?
-        this._api.mute() :
-        this._api.unMute();
+      mute ? this._api.mute() : this._api.unMute();
       this._muted = mute;
     }
   }
@@ -628,7 +661,8 @@ class Youtube extends FakeEventTarget implements IEngine {
   get muted(): boolean {
     let muted = false;
     if (this._playerReady()) {
-      muted = (typeof this._muted === 'boolean') ? this._muted : this._api.isMuted();
+      muted =
+        typeof this._muted === "boolean" ? this._muted : this._api.isMuted();
     }
     return muted;
   }
@@ -656,7 +690,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get poster(): string {
-    return '';
+    return "";
   }
 
   /**
@@ -673,7 +707,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get preload(): string {
-    return 'none';
+    return "none";
   }
 
   /**
@@ -771,7 +805,9 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get ended(): boolean {
-    return this._playerReady() ? this._api.getPlayerState() === window.YT.PlayerState.ENDED : false;
+    return this._playerReady()
+      ? this._api.getPlayerState() === window.YT.PlayerState.ENDED
+      : false;
   }
 
   /**
@@ -788,7 +824,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @public
    */
   get networkState(): number {
-    if (!(this._playerReady())) {
+    if (!this._playerReady()) {
       return 0;
     }
     const playerState = window.YT.PlayerState;
@@ -896,8 +932,13 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._api = null;
     this._videoLoaded = null;
     this._playingIntervalId = null;
-    const dispatchError = e => {
-      const error = new Error(Error.Severity.CRITICAL, Error.Category.PLAYER, Error.Code.LOAD_FAILED, e);
+    const dispatchError = (e) => {
+      const error = new Error(
+        Error.Severity.CRITICAL,
+        Error.Category.PLAYER,
+        Error.Code.LOAD_FAILED,
+        e
+      );
       this.dispatchEvent(new FakeEvent(EventType.ERROR, error));
     };
     this._sdkLoaded = new Promise((resolve, reject) => {
@@ -914,37 +955,45 @@ class Youtube extends FakeEventTarget implements IEngine {
         reject(e.data);
       };
     });
-    this._loadYouTubeIframeAPI().then(() => {
-      this._loadYouTubePlayer();
-    }).catch(e => {
-      dispatchError(e);
-    });
+    this._loadYouTubeIframeAPI()
+      .then(() => {
+        this._loadYouTubePlayer();
+      })
+      .catch((e) => {
+        dispatchError(e);
+      });
   }
 
   _createVideoElement() {
-    const el = (this._el = Utils.Dom.createElement('div'));
-    Utils.Dom.setAttribute(el, 'id', Utils.Generator.uniqueId(5));
-    Utils.Dom.setAttribute(el, 'tabindex', '-1');
+    const el = (this._el = Utils.Dom.createElement("div"));
+    Utils.Dom.setAttribute(el, "id", Utils.Generator.uniqueId(5));
+    Utils.Dom.setAttribute(el, "tabindex", "-1");
   }
 
-  _getYoutubeErrorCodeData(errorNumber: number): {code: number, message: string} {
+  _getYoutubeErrorCodeData(
+    errorNumber: number
+  ): { code: number, message: string } {
     switch (errorNumber) {
       case 2:
-        return { code: errorNumber, message: 'Invalid params' };
+        return { code: errorNumber, message: "Invalid params" };
       case 5:
-        return { code: errorNumber, message: 'Error while trying to play the video' };
+        return {
+          code: errorNumber,
+          message: "Error while trying to play the video",
+        };
       case 100:
-        return { code: errorNumber, message: 'Video not found' };
+        return { code: errorNumber, message: "Video not found" };
       case 101:
       case 150:
         return {
           code: errorNumber,
-          message: 'The owner of the requested video does not allow it to be played in embedded players'
+          message:
+            "The owner of the requested video does not allow it to be played in embedded players",
         };
       default:
         return {
           code: errorNumber,
-          message: 'Unknown error'
+          message: "Unknown error",
         };
     }
   }
@@ -961,14 +1010,17 @@ class Youtube extends FakeEventTarget implements IEngine {
         events: {
           onReady: this._apiReady,
           onError: this._apiError,
-          onStateChange: e => this._onPlayerStateChange(e),
-          onPlaybackQualityChange: e => this._onPlaybackQualityChange(e),
-          onVolumeChange: () => this.dispatchEvent(new FakeEvent(EventType.VOLUME_CHANGE))
-        }
+          onStateChange: (e) => this._onPlayerStateChange(e),
+          onPlaybackQualityChange: (e) => this._onPlaybackQualityChange(e),
+          onVolumeChange: () =>
+            this.dispatchEvent(new FakeEvent(EventType.VOLUME_CHANGE)),
+        },
       };
       config.playerVars.playsinline = this._config.playback.playsinline ? 1 : 0;
       config.playerVars.autoplay = this._config.playback.autoplay ? 1 : 0;
-      if (Utils.Object.hasPropertyPath(this._config, 'playback.options.youtube')) {
+      if (
+        Utils.Object.hasPropertyPath(this._config, "playback.options.youtube")
+      ) {
         const youtubeConfig = this._config.playback.options.youtube;
         Utils.Object.mergeDeep(config.playerVars, youtubeConfig.playerVars);
       }
@@ -989,14 +1041,16 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @private
    * @returns {void}
    */
-  _loadYouTubeIframeAPI(): Promise<> {
+  _loadYouTubeIframeAPI(): Promise<*> {
     return new Promise((resolve, reject) => {
       if (window && window.YT && window.YT.Player) {
         return resolve();
       }
-      const tag = Utils.Dom.createElement('script');
+      const tag = Utils.Dom.createElement("script");
       let url = YOUTUBE_IFRAME_API_URL;
-      if (Utils.Object.hasPropertyPath(this._config, 'playback.options.youtube')) {
+      if (
+        Utils.Object.hasPropertyPath(this._config, "playback.options.youtube")
+      ) {
         if (this._config.playback.options.youtube.iframeApi) {
           url = this._config.playback.options.youtube.iframeApi;
         }
@@ -1007,9 +1061,9 @@ class Youtube extends FakeEventTarget implements IEngine {
         resolve();
       };
       tag.onerror = () => {
-        reject({message: "Youtube Iframe API loading failed: " + url});
+        reject({ message: "Youtube Iframe API loading failed: " + url });
       };
-      const firstScriptTag = document.getElementsByTagName('script')[0];
+      const firstScriptTag = document.getElementsByTagName("script")[0];
       if (firstScriptTag && firstScriptTag.parentNode) {
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       }
@@ -1018,19 +1072,26 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   _getPlayerStateKey(state: number | null): string {
     const playerState = window.YT.PlayerState;
-    return Object.keys(playerState).find(key => playerState[key] === state) || "UNKNOWN";
+    return (
+      Object.keys(playerState).find((key) => playerState[key] === state) ||
+      "UNKNOWN"
+    );
   }
 
   _onPlayerStateChange(event: any): void {
     const playerState = window.YT.PlayerState;
     const newState = event.data;
-    Youtube._logger.info(`player state changed from ${this._getPlayerStateKey(this._currentState)} to ${this._getPlayerStateKey(newState)}`);
+    Youtube._logger.info(
+      `player state changed from ${this._getPlayerStateKey(
+        this._currentState
+      )} to ${this._getPlayerStateKey(newState)}`
+    );
     if (newState === this._currentState) {
       return;
     }
     this._currentState = newState;
 
-    switch( this._currentState ){
+    switch (this._currentState) {
       case playerState.UNSTARTED:
         this._handleLoaded();
         break;
@@ -1055,10 +1116,12 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 
   _onPlaybackQualityChange(event: any): void {
-    let videoTrack = this._playerTracks.find(track => {
+    let videoTrack = this._playerTracks.find((track) => {
       return track instanceof VideoTrack && track.label === event.data;
     });
-    this.dispatchEvent(EventType.VIDEO_TRACK_CHANGED, {selectedVideoTrack: videoTrack})
+    this.dispatchEvent(EventType.VIDEO_TRACK_CHANGED, {
+      selectedVideoTrack: videoTrack,
+    });
   }
 
   _onPlaying() {
@@ -1075,7 +1138,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   _handleLoaded() {
     if (this._loaded) {
       this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
-      this._videoLoaded.resolve({tracks: this._playerTracks});
+      this._videoLoaded.resolve({ tracks: this._playerTracks });
     }
   }
 
@@ -1123,7 +1186,9 @@ class Youtube extends FakeEventTarget implements IEngine {
   resetAllCues(): void {}
   enterPictureInPicture(): void {}
   exitPictureInPicture(): void {}
-  isPictureInPictureSupported(): void {}
+  isPictureInPictureSupported(): boolean {
+    return false;
+  }
   get isInPictureInPicture(): boolean {
     return false;
   }
@@ -1137,4 +1202,4 @@ class Youtube extends FakeEventTarget implements IEngine {
   }
 }
 
-export {Youtube}
+export { Youtube };
