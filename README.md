@@ -1,25 +1,25 @@
 # PlayKit JS YouTube - YouTube Engine for the [PlayKit JS Player]
 
-[![Build Status](https://travis-ci.com/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.com/kaltura/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube/v/canary
-)
+[![Build Status](https://travis-ci.com/kaltura/playkit-js-youtube.svg?branch=master)](https://travis-ci.com/kaltura/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube)[![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube/v/canary)
 
 PlayKit JS YouTube Engine integrates youtube with the [PlayKit JS Player].
- 
+
 PlayKit JS YouTube is written in [ECMAScript6], statically analysed using [Flow] and transpiled in ECMAScript5 using [Babel].
 
-[YouTube Iframe API]: https://developers.google.com/youtube/iframe_api_reference
-[Flow]: https://flow.org/
-[ECMAScript6]: https://github.com/ericdouglas/ES6-Learning#articles--tutorials
-[Babel]: https://babeljs.io
+[youtube iframe api]: https://developers.google.com/youtube/iframe_api_reference
+[flow]: https://flow.org/
+[ecmascript6]: https://github.com/ericdouglas/ES6-Learning#articles--tutorials
+[babel]: https://babeljs.io
 
 ## Getting Started
 
 ### Prerequisites
+
 The adapter requires [PlayKit JS Player] to be loaded first.
 
 The engine uses the [YouTube Iframe API] javascript library.
 
-[Playkit JS Player]: https://github.com/kaltura/playkit-js
+[playkit js player]: https://github.com/kaltura/playkit-js
 
 ### Installing
 
@@ -50,11 +50,11 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 <script type="text/javascript" src="/PATH/TO/FILE/playkit-youtube.js"></script>
 <div id="player-placeholder"" style="height:360px; width:640px">
 <script type="text/javascript">
-var playerContainer = document.querySelector("#player-placeholder");
-var config = {...};
-var player = playkit.core.loadPlayer(config);
-playerContainer.appendChild(player.getView());
-player.play();
+  var playerContainer = document.querySelector("#player-placeholder");
+  var config = {...};
+  var player = playkit.core.loadPlayer(config);
+  playerContainer.appendChild(player.getView());
+  player.play();
 </script>
 ```
 
@@ -66,7 +66,7 @@ The configuration is exposed via the playback section:
 
 ```javascript
 {
-  playback:{
+  playback: {
     options: {
       youtube: {
         // YouTube Iframe configuration options here
@@ -74,18 +74,20 @@ The configuration is exposed via the playback section:
     }
   }
 }
-``` 
+```
 
 ## Running the tests
 
 Tests can be run locally via [Karma], which will run on Chrome, Firefox and Safari
 
-[Karma]: https://karma-runner.github.io/1.0/index.html
+[karma]: https://karma-runner.github.io/1.0/index.html
+
 ```
 yarn run test
 ```
 
 You can test individual browsers:
+
 ```
 yarn run test:chrome
 yarn run test:firefox
@@ -100,7 +102,6 @@ See [ESLint config](.eslintrc.json) for full configuration.
 
 We also use [.editorconfig](.editorconfig) to maintain consistent coding styles and settings, please make sure you comply with the styling.
 
-
 ## Compatibility
 
 TBD
@@ -111,7 +112,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/kaltura/playkit-js-youtube/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/kaltura/playkit-js-youtube/tags).
 
 ## License
 

@@ -1,14 +1,7 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "eslint:recommended",
-    "plugin:flowtype/recommended"
-  ],
-  "plugins": [
-    "import",
-    "flowtype",
-    "mocha-no-only"
-  ],
+  "extends": ["eslint:recommended", "plugin:flowtype/recommended"],
+  "plugins": ["import", "flowtype", "mocha-no-only"],
   "env": {
     "browser": true,
     "es6": true,
@@ -20,15 +13,13 @@
     "should": true,
     "sinon": true,
     "__VERSION__": true,
-    "__NAME__": true
+    "__NAME__": true,
+    "process": true,
+    "__dirname": true
   },
   "rules": {
     "mocha-no-only/mocha-no-only": "off",
-    "require-jsdoc": [
-      "error"
-    ],
-    "valid-jsdoc": [
-      "error"
-    ]
+    "require-jsdoc": ["error"],
+    "valid-jsdoc": ["error"]
   }
 }

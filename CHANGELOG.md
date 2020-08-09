@@ -1,6 +1,21 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.3.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.1.0...v1.3.0) (2020-08-06)
+
+
+### Features
+
+* **FEC-10290:** upgrade NPM packages ([#27](https://github.com/kaltura/playkit-js-youtube/issues/27)) ([641c345](https://github.com/kaltura/playkit-js-youtube/commit/641c3450c4b284ca26ca1fa85a5c809a4638c013))
+* **FEC-9227:** support reInit of MSE ([#11](https://github.com/kaltura/playkit-js-youtube/issues/11)) ([8a7961f](https://github.com/kaltura/playkit-js-youtube/commit/8a7961f2a44264b832ea3fd565c30f21cba6d40c))
+
+
+### Bug Fixes
+
+* **FEC-8821:** css fullscreen doesn't work with youtube iframe ([#14](https://github.com/kaltura/playkit-js-youtube/issues/14)) ([d32a45c](https://github.com/kaltura/playkit-js-youtube/commit/d32a45cdc056892fd9ebe5c7f67d34f9c09a0106))
+* **FEC-8821:** Safari doesn't show correctly youtube iframe ([#15](https://github.com/kaltura/playkit-js-youtube/issues/15)) ([c10b4ce](https://github.com/kaltura/playkit-js-youtube/commit/c10b4cec5a2f66378677d1c28df4e23359410e61))
+* **FEC-9275:** youtube entry failed to play on IE11 ([#12](https://github.com/kaltura/playkit-js-youtube/issues/12)) ([3865264](https://github.com/kaltura/playkit-js-youtube/commit/3865264d55fd8557126ad7e163991abc3d800f84))
 
 <a name="1.2.2"></a>
 
