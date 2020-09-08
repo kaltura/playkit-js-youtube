@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.3.0...v2.0.0) (2020-09-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **FEC-10347:** This package is not UMD anymore
+
+Solves FEC-10347
+
+### Features
+
+* **FEC-10347:** expose kaltura player as a global variable instead of UMD ([#30](https://github.com/kaltura/playkit-js-youtube/issues/30)) ([c68333b](https://github.com/kaltura/playkit-js-youtube/commit/c68333bcf6c5766daff286b7a307536008983efe))
+
 ### [1.3.3](https://github.com/kaltura/playkit-js-youtube/compare/v1.3.2...v1.3.3) (2020-09-07)
 
 ### [1.3.2](https://github.com/kaltura/playkit-js-youtube/compare/v1.3.1...v1.3.2) (2020-09-06)
