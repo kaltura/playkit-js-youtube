@@ -51,10 +51,17 @@ jobs:
           on:
             tags: true
             branch: master
-      after_deploy:
-        - currentVersion=$(npx -c 'echo "$npm_package_version"')
-        - chmod +x ./scripts/after_deploy.sh
-        - ./scripts/after_deploy.sh "youtube" "$currentVersion" "$JENKINS_TAG_TOKEN"
+        - provider: script
+          on:
+            branch: master
+            tags: true
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" true
+        - provider: script
+          on:
+            all_branches: true
+            condition: $TRAVIS_BRANCH != master
+            tags: true
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" false
     # publish canary package if on master
     - stage: Release canary
       if: (branch = master) AND (type != pull_request) AND commit_message !~ /^chore\(release\)/
@@ -69,10 +76,7 @@ jobs:
           tags: false
           branch: master
       after_deploy:
-        - currentVersion=$(npx -c 'echo "$npm_package_version"')
-        - echo $currentVersion
-        - chmod +x ./scripts/after_deploy.sh
-        - ./scripts/after_deploy.sh "youtube" "$currentVersion" "$JENKINS_CANARY_TOKEN"
+        - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN" true
     # Required tests
     - stage: Tests
       if: (branch = master) OR (tag IS present) OR (type = pull_request)
