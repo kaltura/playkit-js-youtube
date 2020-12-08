@@ -55,13 +55,13 @@ jobs:
           on:
             branch: master
             tags: true
-          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" true
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "true"
         - provider: script
           on:
             all_branches: true
             condition: $TRAVIS_BRANCH != master
             tags: true
-          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" false
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "false"
     # publish canary package if on master
     - stage: Release canary
       if: (branch = master) AND (type != pull_request) AND commit_message !~ /^chore\(release\)/
@@ -76,7 +76,7 @@ jobs:
           tags: false
           branch: master
       after_deploy:
-        - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN" true
+        - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN" "true"
     # Required tests
     - stage: Tests
       if: (branch = master) OR (tag IS present) OR (type = pull_request)
