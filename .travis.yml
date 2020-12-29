@@ -82,6 +82,7 @@ jobs:
           tags: false
           branch: master
       after_deploy:
+        - chmod +x ./scripts/after_deploy.sh
         - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN" "true"
     # Required tests
     - stage: Tests
