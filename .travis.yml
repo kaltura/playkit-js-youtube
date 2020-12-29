@@ -25,10 +25,27 @@ stages:
   - Tests
   - Release canary
   - Release
+  - Deploy
 
 jobs:
   fast_finish: true
   include:
+    - stage: Deploy
+      name: "Deploying a new version"
+      if: tag IS present
+      env: TRAVIS_MODE=deploy
+      deploy:
+        - provider: script
+          on:
+            branch: master
+            tags: true
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "true"
+        - provider: script
+          on:
+            all_branches: true
+            condition: $TRAVIS_BRANCH != master
+            tags: true
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "false"
     # https://docs.travis-ci.com/user/build-stages/deploy-github-releases/
     - stage: Release
       name: "Releasing a new version"
@@ -51,17 +68,6 @@ jobs:
           on:
             tags: true
             branch: master
-        - provider: script
-          on:
-            branch: master
-            tags: true
-          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "true"
-        - provider: script
-          on:
-            all_branches: true
-            condition: $TRAVIS_BRANCH != master
-            tags: true
-          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "false"
     # publish canary package if on master
     - stage: Release canary
       if: (branch = master) AND (type != pull_request) AND commit_message !~ /^chore\(release\)/

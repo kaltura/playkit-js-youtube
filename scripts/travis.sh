@@ -20,6 +20,8 @@ elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ];
   echo "Building..."
   yarn run build
   echo "Finish building"
+elif [ "${TRAVIS_MODE}" = "deploy" ]; then
+  echo "Deploy..."
 else
 	echo "Unknown travis mode: ${TRAVIS_MODE}" 1>&2
 	exit 1
