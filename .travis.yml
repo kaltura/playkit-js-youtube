@@ -37,15 +37,9 @@ jobs:
       deploy:
         - provider: script
           on:
-            branch: master
             tags: true
-          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "true"
-        - provider: script
-          on:
             all_branches: true
-            condition: $TRAVIS_BRANCH != master
-            tags: true
-          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN" "false"
+          script: bash ./scripts/after_deploy.sh "$JENKINS_TAG_TOKEN"
     # https://docs.travis-ci.com/user/build-stages/deploy-github-releases/
     - stage: Release
       name: "Releasing a new version"
@@ -83,7 +77,7 @@ jobs:
           branch: master
       after_deploy:
         - chmod +x ./scripts/after_deploy.sh
-        - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN" "true"
+        - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN"
     # Required tests
     - stage: Tests
       if: (branch = master) OR (tag IS present) OR (type = pull_request)
