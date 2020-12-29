@@ -11,7 +11,11 @@ elif [ "${TRAVIS_MODE}" = "unitTests" ]; then
 elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ]; then
   if [ "${TRAVIS_MODE}" = "releaseCanary" ]; then
     echo "Run standard-version"
-    yarn run release --prerelease canary --skip.commit=true --skip.tag=true
+    sha=$(git rev-parse --verify --short HEAD)
+    echo "Current sha ${sha}"
+    commitNumberAfterTag=$(git rev-list  `git rev-list --tags --no-walk --max-count=1`..HEAD --count)
+    echo "Number of commit from last tag ${commitNumberAfterTag}"
+    yarn run release --prerelease canary-${commitNumberAfterTag}-${sha} --skip.commit=true --skip.tag=true
     currentVersion=$(npx -c 'echo "$npm_package_version"')
     echo "Current version ${currentVersion}"
   else
