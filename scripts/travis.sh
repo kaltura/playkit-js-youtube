@@ -15,9 +15,15 @@ elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ];
     echo "Current sha ${sha}"
     commitNumberAfterTag=$(git rev-list  `git rev-list --tags --no-walk --max-count=1`..HEAD --count)
     echo "Number of commit from last tag ${commitNumberAfterTag}"
-    yarn run release --prerelease canary-${commitNumberAfterTag}-${sha} --skip.commit=true --skip.tag=true
+    yarn run release --prerelease canary --skip.commit=true --skip.tag=true
     currentVersion=$(npx -c 'echo "$npm_package_version"')
     echo "Current version ${currentVersion}"
+    newVersion=$(echo $currentVersion | sed -e "s/canary\.[[:digit:]]/canary.${commitNumberAfterTag}-${sha}/g")
+    echo "New version ${newVersion}"
+    sed -iE "s/$currentVersion/$newVersion/g" package.json
+    sed -iE "s/$currentVersion/$newVersion/g" CHANGELOG.md
+    rm package.jsonE
+    rm CHANGELOG.mdE
   else
     conventional-github-releaser -p angular -t $GH_TOKEN
   fi
