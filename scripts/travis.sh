@@ -1,8 +1,8 @@
 #!/bin/sh
 # https://docs.travis-ci.com/user/customizing-the-build/#Implementing-Complex-Build-Steps
 set -ev
- yarn install
- if [ "${TRAVIS_MODE}" = "lint" ]; then
+yarn install
+if [ "${TRAVIS_MODE}" = "lint" ]; then
   yarn run eslint
 elif [ "${TRAVIS_MODE}" = "flow" ]; then
   yarn run flow
@@ -25,7 +25,9 @@ elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ];
     rm package.jsonE
     rm CHANGELOG.mdE
   else
-    conventional-github-releaser -p angular -t $GH_TOKEN
+    echo "Run conventional-github-releaser"
+    #ignore error to make sure release won't get stuck
+    conventional-github-releaser -p angular -t $GH_TOKEN || true
   fi
   echo "Building..."
   yarn run build
