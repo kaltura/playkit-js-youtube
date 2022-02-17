@@ -4,6 +4,9 @@ dist: xenial
 language: node_js
 node_js:
   - 'node'
+env:
+  global:
+    - NODE_OPTIONS="--openssl-legacy-provider"
 
 addons:
   chrome: stable
@@ -88,6 +91,4 @@ jobs:
       name: 'Running Flow type check'
       env: TRAVIS_MODE=flow
     - stage: Tests
-      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
-      name: 'Running unit tests'
-      env: TRAVIS_MODE=unitTests
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message
