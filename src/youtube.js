@@ -1138,6 +1138,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   _handleLoaded() {
     if (this._loaded) {
       this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
+      this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA));
       this._videoLoaded.resolve({ tracks: this._playerTracks });
     }
   }
