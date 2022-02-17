@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/kaltura/playkit-js-youtube/compare/v2.0.1...v2.0.2) (2022-02-17)
+
+
+### Bug Fixes
+
+* **FEC-11977:** the progress bar and the scrubber don't appear when Youtube entry is playing ([#59](https://github.com/kaltura/playkit-js-youtube/issues/59)) ([1cdd029](https://github.com/kaltura/playkit-js-youtube/commit/1cdd0296148b2499c409a856d705e057feb08c26)), closes [/github.com/kaltura/playkit-js-ui/pull/659/files#diff-aa4ec9f79c75d6a05327cd3bcbb2aafe0124848414d93d34f6457387d35c1f2eR586](https://github.com/kaltura//github.com/kaltura/playkit-js-ui/pull/659/files/issues/diff-aa4ec9f79c75d6a05327cd3bcbb2aafe0124848414d93d34f6457387d35c1f2eR586)
+
 ### [2.0.1](https://github.com/kaltura/playkit-js-youtube/compare/v2.0.0...v2.0.1) (2020-11-03)
 
 ## [2.0.0](https://github.com/kaltura/playkit-js-youtube/compare/v1.3.0...v2.0.0) (2020-09-08)
