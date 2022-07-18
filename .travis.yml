@@ -4,9 +4,6 @@ dist: xenial
 language: node_js
 node_js:
   - '16'
-env:
-  global:
-    - NODE_OPTIONS="--openssl-legacy-provider"
 
 addons:
   chrome: stable
