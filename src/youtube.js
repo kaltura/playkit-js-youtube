@@ -405,7 +405,7 @@ class Youtube extends FakeEventTarget implements IEngine {
    * @returns {void}
    */
   pause(): void {
-    if (this._api) {
+    if (this._api && this._api.pauseVideo) {
       this._api.pauseVideo();
     }
   }
@@ -633,7 +633,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         return 0;
       },
       end: () => {
-        return this._api
+        return this._api && this._api.getVideoLoadedFraction
           ? this._api.getVideoLoadedFraction() * this.duration
           : 0;
       },
@@ -1201,6 +1201,7 @@ class Youtube extends FakeEventTarget implements IEngine {
   get availableBuffer(): number {
     return NaN;
   }
+
 }
 
 export { Youtube };
