@@ -896,13 +896,13 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
-"@playkit-js/playkit-js@canary":
-  version "0.65.0-canary.6de30bb"
-  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js/-/playkit-js-0.65.0-canary.6de30bb.tgz#11735c41d7652e97b40cf75987f3819a8ada4f46"
-  integrity sha512-ZjFXzFPG5mBhImHSXuSjTYtPCuksnmTXVzawm5mErIW0TRuLHn0wOnUunAoSzjrNX26eZ5XZdGnNKiW2rtrUJA==
+"@playkit-js/playkit-js@^0.82.2":
+  version "0.82.2"
+  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js/-/playkit-js-0.82.2.tgz#e3d14c30bd43098a703fd788e54ecf71e65de5b2"
+  integrity sha512-4Z0dUy0ofwYELwk3O1TIHzDEUXl4MbunE7XaqIu5/o3/+S7KyfapabU13vWse1VtHLGkXESHsl2O96L6CCfpRA==
   dependencies:
     js-logger "^1.6.0"
-    ua-parser-js "^0.7.21"
+    ua-parser-js "1.0.2"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
@@ -8009,10 +8009,15 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-ua-parser-js@0.7.21, ua-parser-js@^0.7.21:
+ua-parser-js@0.7.21:
   version "0.7.21"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
   integrity sha512-+O8/qh/Qj8CgC6eYBVBykMrNtp5Gebn4dlGD/kKXVkJNDwyrAwSIqwz8CDf+tsAIWVycKcku6gIXJ0qwx/ZXaQ==
+
+ua-parser-js@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.2.tgz#e2976c34dbfb30b15d2c300b2a53eac87c57a775"
+  integrity sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==
 
 uglify-js@^3.1.4:
   version "3.4.9"
