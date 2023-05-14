@@ -82,7 +82,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
-    "@playkit-js/playkit-js": "0.63.0"
+    "@playkit-js/playkit-js": "canary"
   },
   "keywords": [
     "kaltura",
