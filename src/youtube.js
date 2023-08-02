@@ -233,6 +233,9 @@ class Youtube extends FakeEventTarget implements IEngine {
   reset(): void {
     this._reset();
     this._eventManager.removeAll();
+    if (this._api) {
+      this._api.destroy && this._api.destroy();
+    }
   }
 
   /**
