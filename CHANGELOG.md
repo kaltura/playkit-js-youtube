@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.0.8 (2023-08-21)
+
+
+### Bug Fixes
+
+* **SUP-36236:** Youtube video are not played in a playlist ([#82](https://github.com/kaltura/playkit-js-youtube/issues/82)) ([a06d4be](https://github.com/kaltura/playkit-js-youtube/commit/a06d4bedda0fc28b70eee436b96f5309a446aba3))
+
 ### 2.0.7 (2023-05-02)
 
 ### [2.0.6](https://github.com/kaltura/playkit-js-youtube/compare/v2.0.5...v2.0.6) (2022-09-01)
