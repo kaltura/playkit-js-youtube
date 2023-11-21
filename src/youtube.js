@@ -1187,6 +1187,11 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._playingIntervalId = null;
   }
 
+  // eslint-disable-next-line no-unused-vars
+  getThumbnail(time: number): null {
+    return null;
+  }
+
   resetAllCues(): void {}
   enterPictureInPicture(): void {}
   exitPictureInPicture(): void {}
