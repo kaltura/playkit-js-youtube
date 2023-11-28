@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 2.0.9 (2023-11-28)
+
+
+### Bug Fixes
+
+* **SUP-40028:** The playlist player freezes during the playback ([#85](https://github.com/kaltura/playkit-js-youtube/issues/85)) ([1783a08](https://github.com/kaltura/playkit-js-youtube/commit/1783a082864d929feaf30f5f4e9dab608046ee9e))
+
 ### 2.0.8 (2023-08-21)
 
 
