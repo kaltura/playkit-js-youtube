@@ -904,6 +904,11 @@
     js-logger "^1.6.0"
     ua-parser-js "1.0.2"
 
+"@playkit-js/webpack-common@^1.0.1-canary.0-9fd715a":
+  version "1.0.1-canary.0-9fd715a"
+  resolved "https://registry.yarnpkg.com/@playkit-js/webpack-common/-/webpack-common-1.0.1-canary.0-9fd715a.tgz#b2ad08a69f2366da99a4797cb53ab38f8db5afe9"
+  integrity sha512-ctYW6lkFxGvZlS826GE7z4d1dcuoTJ3TkcuLe8LWsETQc1jhOW8IT5k261TO1S+ZWsVVDX7YzwCEnGWJbQTdAg==
+
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"

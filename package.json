@@ -104,5 +104,8 @@
   "homepage": "https://github.com/kaltura/playkit-js-youtube#readme",
   "kcc": {
     "name": "playkit-youtube"
+  },
+  "dependencies": {
+    "@playkit-js/webpack-common": "^1.0.1-canary.0-9fd715a"
   }
 }
