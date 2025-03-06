@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.1.0 (2025-03-06)
+
+
+### Features
+
+* **FEC-14380:** update package.json ([#87](https://github.com/kaltura/playkit-js-youtube/issues/87)) ([86d11bd](https://github.com/kaltura/playkit-js-youtube/commit/86d11bd3e6130d3addaac12a3464be5b3341b6af))
+
 ### 2.0.9 (2023-11-28)
 
 
