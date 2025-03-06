@@ -106,6 +106,6 @@
     "name": "playkit-youtube"
   },
   "dependencies": {
-    "@playkit-js/webpack-common": "^1.0.1-canary.0-9fd715a"
+    "@playkit-js/webpack-common": "^1.0.3"
   }
 }
