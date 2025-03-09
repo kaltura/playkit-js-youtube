@@ -1,3 +1,4 @@
 /flow-typed/**/*.js
 /coverage
 /dist
+*.ts

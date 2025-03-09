@@ -84,6 +84,8 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   _playerTracks: Array<Track> = [];
 
+  _clipToInterval: any = null;
+
   /**
    * The Youtube class logger.
    * @type {any}
@@ -224,6 +226,10 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._isAdaptiveBitrate = true;
     this._playerTracks = [];
     this._currentState = null;
+    if (this._clipToInterval) {
+      clearInterval(this._clipToInterval);
+      this._clipToInterval = null;
+    }
   }
 
   /**
@@ -1127,7 +1133,23 @@ class Youtube extends FakeEventTarget implements IEngine {
     });
   }
 
+  _handleClipTo(): void {
+    if (this._clipToInterval) {
+      clearInterval(this._clipToInterval);
+    }
+    const { clipTo } = this._config.sources;
+    if (this._api && clipTo && this.currentTime < clipTo) {
+      this._clipToInterval = setInterval(() => {
+        if (this._api.getCurrentTime() >= clipTo) {
+          this._api.pauseVideo();
+          clearInterval(this._clipToInterval);
+        }
+      }, 200);
+    }
+  }
+
   _onPlaying() {
+    this._handleClipTo();
     this.dispatchEvent(new FakeEvent(EventType.PLAY));
     this.dispatchEvent(new FakeEvent(EventType.PLAYING));
     this._startPlayingWatchDog();
@@ -1149,6 +1171,10 @@ class Youtube extends FakeEventTarget implements IEngine {
   _handleFirstPlaying() {
     this._firstPlaying = false;
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
+    const {seekFrom} = this._config.sources;
+    if (this._api && seekFrom) {
+      this._api.seekTo(seekFrom);
+    }
   }
 
   _onBuffering() {

@@ -51,6 +51,14 @@ module.exports = {
         ],
       },
       {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        options: {
+          configFile: 'tsconfig.json'
+        },
+        exclude: /node_modules/
+      },
+      {
         test: /\.css$/,
         use: [
           {
@@ -74,11 +82,13 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
+    extensions: ['.ts', '.js']
   },
   optimization: {
     minimize: PROD,
   },
   externals: {
-    "@playkit-js/playkit-js": ["KalturaPlayer", "core"]
+    "@playkit-js/playkit-js": ["KalturaPlayer", "core"],
+    '@playkit-js/kaltura-player-js': 'root KalturaPlayer'
   }
 };

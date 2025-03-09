@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "target": "es2017",
+    "module": "commonjs",
+    "allowJs": false,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "Node",
+    "baseUrl": "..",
+    "preserveSymlinks": true,
+    "paths": {
+      "*": ["../node_modules/*", "./src"]
+    },
+    "types": ["node"],
+    "lib": ["es2015", "dom"]
+  },
+  "include": ["src/**/*.ts", "node_modules/@playkit-js/kaltura-player-js/ts-typed"]
+}
