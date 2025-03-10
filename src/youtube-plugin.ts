@@ -32,12 +32,9 @@ class YouTubePlugin extends BasePlugin {
     });
   }
 
-  public reset(): void {
-  }
+  public reset(): void {}
 
-  public destroy(): void {
-    this.eventManager.destroy();
-  }
+  public destroy(): void {}
 }
 
 export { YouTubePlugin };
