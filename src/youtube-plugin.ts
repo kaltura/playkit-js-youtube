@@ -2,7 +2,7 @@ import { BasePlugin, KalturaPlayer } from '@playkit-js/kaltura-player-js';
 
 const YT_CHAPTER_TYPE: string = 'YouTubeClipChapter';
 
-export class YouTubePlugin extends BasePlugin {
+class YouTubePlugin extends BasePlugin {
   constructor(name: string, player: KalturaPlayer, config: Object) {
     super(name, player, config);
   }
@@ -39,3 +39,5 @@ export class YouTubePlugin extends BasePlugin {
     this.eventManager.destroy();
   }
 }
+
+export { YouTubePlugin };
