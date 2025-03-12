@@ -40,6 +40,7 @@
     "@babel/register": "^7.10.5",
     "@playkit-js/kaltura-player-js": "^3.17.41-canary.0-d7fc665",
     "@playkit-js/playkit-js": "canary",
+    "@typescript-eslint/parser": "^6.12.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-istanbul": "^6.0.0",
