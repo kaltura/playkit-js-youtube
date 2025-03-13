@@ -30,6 +30,7 @@ const DEFAULT_PLAYER_VARS: { [var: string]: number | string } = {
   playsinline: 1,
   rel: 0,
   fs: 0,
+  cc_load_policy: 1
 };
 
 /**
@@ -1174,6 +1175,9 @@ class Youtube extends FakeEventTarget implements IEngine {
     const {seekFrom} = this._config.sources;
     if (this._api && seekFrom) {
       this._api.seekTo(seekFrom);
+    }
+    if (this._api && this._config.sources.captions.length > 0) {
+      this._api.setOption('captions', 'track', {});
     }
   }
 

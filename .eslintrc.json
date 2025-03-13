@@ -21,5 +21,16 @@
     "mocha-no-only/mocha-no-only": "off",
     "require-jsdoc": ["error"],
     "valid-jsdoc": ["error"]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
 }
