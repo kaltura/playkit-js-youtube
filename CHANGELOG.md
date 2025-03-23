@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.2.0 (2025-03-23)
+
+
+### Features
+
+* **FEC-14344:** turn off captions when kaltura captions exist ([#89](https://github.com/kaltura/playkit-js-youtube/issues/89)) ([6eab8c7](https://github.com/kaltura/playkit-js-youtube/commit/6eab8c72e62ce031682b3531283f1ee18a04c907))
+
 ## 2.1.0 (2025-03-06)
 
 
