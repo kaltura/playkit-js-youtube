@@ -1,9 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    <script src="./playkit-youtube.js" type="text/javascript"></script>
-  </head>
-  <body></body>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Youtube engine</title>
+  <script src="https://unpkg.com/@playkit-js/kaltura-player-js@latest/dist/kaltura-ovp-player.js"></script>
+  <script src="./playkit-youtube.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <div id="player-placeholder" style="width: 768px; height: 480px"></div>
+  <script>
+    const config = {
+      logLevel: 'DEBUG',
+      targetId: 'player-placeholder',
+      provider: {
+        partnerId: 4992442,
+        log: {
+          level: "DEBUG"
+        }
+      },
+      playback: {
+        autoplay: false
+      },
+      plugins: {}
+    };
+
+    const player = KalturaPlayer.setup(config);
+
+    player.setMedia({ "sources": { "progressive": [{ "mimetype": "video/youtube", "url": "neSQgkEy_xQ" }] } });
+  </script>
+</body>
+
 </html>
