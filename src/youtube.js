@@ -1172,11 +1172,11 @@ class Youtube extends FakeEventTarget implements IEngine {
   _handleFirstPlaying() {
     this._firstPlaying = false;
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
-    const {seekFrom} = this._config.sources;
+    const {seekFrom, captions} = this._config.sources;
     if (this._api && seekFrom) {
       this._api.seekTo(seekFrom);
     }
-    if (this._api && this._config.sources.captions.length > 0) {
+    if (this._api && captions && captions.length > 0) {
       this._api.setOption('captions', 'track', {});
     }
   }
