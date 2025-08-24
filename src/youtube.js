@@ -1025,6 +1025,10 @@ class Youtube extends FakeEventTarget implements IEngine {
           onVolumeChange: () =>
             this.dispatchEvent(new FakeEvent(EventType.VOLUME_CHANGE)),
         },
+        // Add iframe attributes to allow necessary permissions
+        attributes: {
+          allow: "autoplay; fullscreen; clipboard-write; encrypted-media; accelerometer; gyroscope; picture-in-picture; web-share"
+        }
       };
       config.playerVars.playsinline = this._config.playback.playsinline ? 1 : 0;
       config.playerVars.autoplay = this._config.playback.autoplay ? 1 : 0;
