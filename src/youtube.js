@@ -229,8 +229,8 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._isAdaptiveBitrate = true;
     this._playerTracks = [];
     this._currentState = null;
-    this._muted = true; // Reset to muted state
-    this._forcedMuteOnInit = true; // Reset initialization flag
+    this._muted = true;
+    this._forcedMuteOnInit = true;
     if (this._clipToInterval) {
       clearInterval(this._clipToInterval);
       this._clipToInterval = null;
@@ -1036,10 +1036,6 @@ class Youtube extends FakeEventTarget implements IEngine {
           onVolumeChange: () =>
             this.dispatchEvent(new FakeEvent(EventType.VOLUME_CHANGE)),
         },
-        // Add iframe attributes to allow necessary permissions
-        attributes: {
-          allow: "autoplay; fullscreen; clipboard-write; encrypted-media; accelerometer; gyroscope; picture-in-picture; web-share"
-        }
       };
       config.playerVars.playsinline = this._config.playback.playsinline ? 1 : 0;
       config.playerVars.autoplay = this._config.playback.autoplay ? 1 : 0;
