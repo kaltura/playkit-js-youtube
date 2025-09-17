@@ -196,7 +196,6 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._eventManager = new EventManager();
     this._createVideoElement();
     this._muted = true; // Initialize as muted by default
-    this._forcedMuteOnInit = true; // Prevent unmuting during initialization
     this._init(source, config);
   }
 
@@ -230,7 +229,6 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._playerTracks = [];
     this._currentState = null;
     this._muted = true;
-    this._forcedMuteOnInit = true;
     if (this._clipToInterval) {
       clearInterval(this._clipToInterval);
       this._clipToInterval = null;
@@ -662,10 +660,6 @@ class Youtube extends FakeEventTarget implements IEngine {
    */
   set muted(mute: boolean): void {
     if (this._playerReady()) {
-      // Prevent unmuting during initial load to enforce muted start
-      if (!mute && this._forcedMuteOnInit) {
-        return;
-      }
       mute ? this._api.mute() : this._api.unMute();
       this._muted = mute;
     }
@@ -964,10 +958,6 @@ class Youtube extends FakeEventTarget implements IEngine {
         // Always start muted for YouTube players
         this._api.mute && this._api.mute();
         this._muted = true;
-        // Allow unmuting after initial setup is complete
-        setTimeout(() => {
-          this._forcedMuteOnInit = false;
-        }, 100);
         resolve();
       };
       this._apiError = (e) => {
