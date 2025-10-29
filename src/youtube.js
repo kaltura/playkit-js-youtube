@@ -1021,7 +1021,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         events: {
           onReady: (e) => {
             this._apiReady(e);
-            const iframe = e.target?.getIframe?.();
+            const iframe = e.target && typeof e.target.getIframe === 'function' ? e.target.getIframe() : null;
             if (iframe) {
               iframe.setAttribute('aria-hidden', 'true');
             }
