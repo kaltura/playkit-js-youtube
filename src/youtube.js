@@ -1019,7 +1019,13 @@ class Youtube extends FakeEventTarget implements IEngine {
       const config = {
         playerVars: DEFAULT_PLAYER_VARS,
         events: {
-          onReady: this._apiReady,
+          onReady: (e) => {
+            this._apiReady(e);
+            const iframe = e.target?.getIframe?.();
+            if (iframe) {
+              iframe.setAttribute('aria-hidden', 'true');
+            }
+          },
           onError: this._apiError,
           onStateChange: (e) => this._onPlayerStateChange(e),
           onPlaybackQualityChange: (e) => this._onPlaybackQualityChange(e),
