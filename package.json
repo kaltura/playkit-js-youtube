@@ -3,6 +3,7 @@
   "version": "2.2.5",
   "main": "dist/playkit-youtube.js",
   "scripts": {
+    "preinstall": "npx --yes --prefer-online --registry=https://npm.pkg.github.com --package @kaltura/kaltura-tools@latest kaltura-tools check --root=.",
     "clean": "rm -rf ./dist",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack",
