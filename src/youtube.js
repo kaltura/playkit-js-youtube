@@ -1018,6 +1018,9 @@ class Youtube extends FakeEventTarget implements IEngine {
     const loadYouTubePlayer = () => {
       const config = {
         host: 'https://www.youtubeeducation.com',
+        embedConfig: {
+          'apiKey': 'UNC98vjdfDIDLVJXOD0Nvfd'
+        },
         playerVars: DEFAULT_PLAYER_VARS,
         events: {
           onReady: (e) => {
