@@ -4,6 +4,7 @@ import {
   FakeEventTarget,
   FakeEvent,
   EventType,
+  CustomEventType,
   Error,
 } from "@playkit-js/playkit-js";
 import {
@@ -11,6 +12,7 @@ import {
   VideoTrack,
   AudioTrack,
   TextTrack as PKTextTrack,
+  createTimedMetadata,
 } from "@playkit-js/playkit-js";
 import { Utils, getLogger } from "@playkit-js/playkit-js";
 
@@ -86,6 +88,10 @@ class Youtube extends FakeEventTarget implements IEngine {
   _playerTracks: Array<Track> = [];
 
   _clipToInterval: any = null;
+
+  _textTrack: any;
+
+  _lastMetadataTime: number = 0;
 
   /**
    * The Youtube class logger.
@@ -229,6 +235,8 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._playerTracks = [];
     this._currentState = null;
     this._muted = true;
+    this._textTracks = [];
+    this._lastMetadataTime = 0;
     if (this._clipToInterval) {
       clearInterval(this._clipToInterval);
       this._clipToInterval = null;
@@ -944,6 +952,7 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._api = null;
     this._videoLoaded = null;
     this._playingIntervalId = null;
+    // this._handleMetadataTrackEvents();
     const dispatchError = (e) => {
       const error = new Error(
         Error.Severity.CRITICAL,
@@ -1222,6 +1231,87 @@ class Youtube extends FakeEventTarget implements IEngine {
   _stopPlayingWatchDog() {
     clearInterval(this._playingIntervalId);
     this._playingIntervalId = null;
+  }
+
+  _handleMetadataTrackEvents(): void {
+    this._eventManager.listen(this, EventType.TIME_UPDATE, () => {
+      this._checkMetadataCues();
+    });
+  }
+
+  _isMetadataTrack(): boolean {
+    return this._textTrack && (this._textTrack.kind === 'metadata' || this._textTrack.type === 'metadata');
+  }
+
+  _hadMetadataSeek(): boolean {
+    return !!this.currentTime && this._lastMetadataTime > 0 && Math.abs(this.currentTime - this._lastMetadataTime) > 1;
+  }
+
+  _maybeRemoveActiveCues(): boolean {
+    let cuesRemoved = false;
+    if (this._textTrack){
+      const updatedActiveTextCues = this._textTrack.activeCues.filter((cue) => cue.startTime <= this.currentTime && cue.endTime > this.currentTime);
+      cuesRemoved = this._textTrack.activeCues.length !== updatedActiveTextCues.length;
+      this._textTrack.activeCues = updatedActiveTextCues;
+    }
+    return cuesRemoved;
+  }
+
+  _maybeAddToActiveCues(): boolean {
+    let cuesAdded = false;
+    if (this._textTrack){
+      Array.from(this._textTrack.cues).forEach((cue) => {
+        if (cue.startTime <= this.currentTime && cue.endTime > this.currentTime) {
+          if (!this._textTrack.activeCues.includes(cue)) {
+            this._textTrack.activeCues.push(cue);
+            cuesAdded = true;
+          }
+        }
+      });
+    }
+    return cuesAdded; 
+  }
+
+  _checkMetadataCues(): void {
+    let cuesChanged = false;
+    if (this._textTrack && this._isMetadataTrack()) {
+      if (this._hadMetadataSeek()) {
+        this._textTrack.activeCues = [];
+        cuesChanged = true;
+      }
+      const removed = this._maybeRemoveActiveCues();
+      const added = this._maybeAddToActiveCues();
+      if (removed || added) {
+         cuesChanged = true;
+      }
+    if (cuesChanged) {
+      this._textTrack.activeCues.sort((a, b) => a.startTime - b.startTime);
+      this.dispatchEvent(new FakeEvent(CustomEventType.TIMED_METADATA, { cues: this._textTrack.activeCues }));
+      this.dispatchEvent(
+        new FakeEvent(CustomEventType.TIMED_METADATA_CHANGE, {
+          cues: this._textTrack.activeCues.map((cue) => createTimedMetadata(cue))
+        })
+      );
+    }
+    this._lastMetadataTime = this.currentTime;
+    }
+  }
+
+  addTextTrack(kind: string, label?: string, language?: string): any {
+    this._handleMetadataTrackEvents();
+    const textTrack = {
+      kind: kind,
+      label: label || '',
+      language: language || '',
+      mode: PKTextTrack.MODE.HIDDEN,
+      cues: [],
+      activeCues: [],
+      addCue: function(cue: any) {
+        this.cues.push(cue);
+      },
+    };
+    this._textTrack = textTrack;
+    return textTrack;
   }
 
   // eslint-disable-next-line no-unused-vars
