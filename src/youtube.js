@@ -952,7 +952,6 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._api = null;
     this._videoLoaded = null;
     this._playingIntervalId = null;
-    // this._handleMetadataTrackEvents();
     const dispatchError = (e) => {
       const error = new Error(
         Error.Severity.CRITICAL,
