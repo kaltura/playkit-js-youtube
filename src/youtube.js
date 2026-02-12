@@ -1318,6 +1318,7 @@ class Youtube extends FakeEventTarget implements IEngine {
     return null;
   }
 
+  shouldAddTextTrack(): void{}
   resetAllCues(): void {}
   enterPictureInPicture(): void {}
   exitPictureInPicture(): void {}
