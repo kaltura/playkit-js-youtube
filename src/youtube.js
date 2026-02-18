@@ -435,6 +435,7 @@ class Youtube extends FakeEventTarget implements IEngine {
         const loadOptions = {
           videoId: this._source.url,
           startSeconds: startTime && startTime > 0 ? startTime : 0,
+          ...this._config.externals["playkit-youtube"].active.youtubeeducation,
         };
         this._api.cueVideoById(loadOptions);
         this._loaded = true;
