@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/playkit-js-youtube",
-  "version": "2.2.6",
+  "version": "2.3.0",
   "main": "dist/playkit-youtube.js",
   "scripts": {
     "disabled-preinstall": "npx --yes --prefer-online --registry=https://npm.pkg.github.com --package @kaltura/kaltura-tools@latest kaltura-tools check --root=.",

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.3.0 (2026-02-26)
+
+
+### Features
+
+* **FEC-14886:** Add EAD support on the Normal YouTube Player ([#98](https://github.com/kaltura/playkit-js-youtube/issues/98)) ([0e3eae2](https://github.com/kaltura/playkit-js-youtube/commit/0e3eae278a603b7646da55ab6cd586c79a1ef320)), closes [kaltura/kaltura-player-js#1173](https://github.com/kaltura/kaltura-player-js/issues/1173)
+
 ### 2.2.6 (2025-12-18)
 
 ### 2.2.5 (2025-11-06)
