@@ -1,5 +1,5 @@
 # PlayKit JS YouTube - YouTube Engine for the [PlayKit JS Player]
-
+ 
 [![Build Status](https://github.com/kaltura/playkit-js-youtube/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-youtube/actions/workflows/run_canary_full_flow.yaml)
 [![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/latest.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube)
 [![](https://img.shields.io/npm/v/@playkit-js/playkit-js-youtube/canary.svg)](https://www.npmjs.com/package/@playkit-js/playkit-js-youtube/v/canary)
