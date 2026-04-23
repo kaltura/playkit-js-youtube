@@ -1,0 +1,156 @@
+{
+  "repositoryName": "playkit-js-youtube",
+  "coreResponsibility": {
+    "description": "A playback engine adapter/plugin that integrates YouTube video playback capabilities into the Kaltura PlayKit JS Player ecosystem, enabling embedded YouTube content to be played through the unified Kaltura Player interface.",
+    "type": "Engine Adapter / Playback Provider Plugin"
+  },
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "YouTube iframe API integration and lifecycle management",
+      "YouTube video playback control (play, pause, seek, volume)",
+      "YouTube player state change event handling and normalization to PlayKit events",
+      "Video quality/track selection for YouTube content",
+      "Playback rate control for YouTube videos",
+      "Clip-to/seek-from functionality for YouTube entries",
+      "YouTube captions/subtitles handling",
+      "Timed metadata track support for YouTube content",
+      "Timeline/chapter management for YouTube clips",
+      "YouTube-specific error handling and mapping"
+    ],
+    "dataHandling": [
+      "YouTube player state machine (UNSTARTED, ENDED, PLAYING, PAUSED, BUFFERING, CUED)",
+      "Video tracks (quality levels from YouTube API)",
+      "Text tracks and timed metadata cues",
+      "Playback position and duration",
+      "Buffered/loaded ranges",
+      "Volume and mute state",
+      "Playback rates"
+    ]
+  },
+  "integrationPoints": {
+    "upstream": [
+      {
+        "name": "@playkit-js/playkit-js",
+        "description": "Core PlayKit player providing base engine interface (IEngine), event system, track types, and utilities"
+      },
+      {
+        "name": "@playkit-js/kaltura-player-js",
+        "description": "Main Kaltura Player providing BasePlugin class, UI components, and plugin registration"
+      },
+      {
+        "name": "playkit-timeline",
+        "description": "Timeline service for chapter/cue point management"
+      }
+    ],
+    "downstream": [
+      {
+        "name": "Kaltura Player UI",
+        "description": "Consumes player events and state for rendering playback controls"
+      },
+      {
+        "name": "Kaltura Player Analytics plugins",
+        "description": "Receives playback events for tracking"
+      },
+      {
+        "name": "Any application using Kaltura Player with YouTube entries",
+        "description": "End-user applications playing YouTube content through Kaltura"
+      }
+    ],
+    "externalAPIs": [
+      {
+        "name": "YouTube IFrame Player API",
+        "url": "https://developers.google.com/youtube/iframe_api_reference",
+        "description": "Primary external SDK for controlling embedded YouTube video playback"
+      }
+    ]
+  },
+  "technicalStack": {
+    "languages": [
+      "JavaScript (ES6+ with Flow type annotations)",
+      "TypeScript"
+    ],
+    "frameworks": [
+      "PlayKit JS Engine Interface (IEngine)",
+      "Kaltura Player Plugin Architecture (BasePlugin)"
+    ],
+    "buildTools": [
+      "Webpack",
+      "Babel",
+      "TypeScript compiler"
+    ],
+    "testingTools": [
+      "Karma",
+      "Mocha",
+      "Chai",
+      "Sinon"
+    ],
+    "entryPoints": [
+      {
+        "file": "src/index.js",
+        "description": "Main entry point - exports Engine, Plugin, registers the YouTube engine and plugin"
+      },
+      {
+        "file": "src/youtube.js",
+        "description": "Core YouTube engine implementation - implements IEngine interface, handles all YouTube iframe API interactions"
+      },
+      {
+        "file": "src/youtube-plugin.ts",
+        "description": "YouTube plugin for UI customizations and timeline/chapter integration"
+      }
+    ]
+  },
+  "triageKeywords": [
+    "youtube",
+    "youtube engine",
+    "youtube player",
+    "youtube iframe",
+    "YT.Player",
+    "video/youtube",
+    "youtube mimetype",
+    "youtube playback",
+    "youtube embedded",
+    "youtube entry",
+    "youtube quality",
+    "youtube buffering",
+    "youtube state change",
+    "youtube iframe api",
+    "youtube clip",
+    "youtube seekFrom",
+    "youtube clipTo",
+    "youtube captions",
+    "youtube error 101",
+    "youtube error 150",
+    "youtube error 100",
+    "onYouTubeIframeAPIReady",
+    "playkit-youtube",
+    "EngineType.YOUTUBE"
+  ],
+  "errorPatterns": [
+    {
+      "pattern": "Youtube Iframe API loading failed",
+      "description": "Failed to load the YouTube iframe API script"
+    },
+    {
+      "pattern": "Invalid params",
+      "code": 2,
+      "description": "YouTube API error - invalid video ID or parameters"
+    },
+    {
+      "pattern": "Error while trying to play the video",
+      "code": 5,
+      "description": "YouTube API error - HTML5 player error"
+    },
+    {
+      "pattern": "Video not found",
+      "code": 100,
+      "description": "YouTube API error - video removed or private"
+    },
+    {
+      "pattern": "does not allow it to be played in embedded players",
+      "codes": [101, 150],
+      "description": "YouTube API error - embedding disabled by video owner"
+    }
+  ],
+  "version": "2.3.1",
+  "license": "AGPL-3.0"
+}
