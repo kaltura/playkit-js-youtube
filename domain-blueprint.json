@@ -118,7 +118,7 @@
     "YouTube not playing"
   ],
   "errorPatterns": [
-    "Youtube Iframe API loading failed",
+    "YouTube IFrame API loading failed",
     "Invalid params (error code 2)",
     "Video not found (error code 100)",
     "embedded players not allowed (error code 101/150)",
