@@ -117,7 +117,7 @@
   "kaltura": {
     "name": "youtube",
     "dependencies": {
-      "playkit-timeline": "3.1.5"
+      "playkit-timeline": "3.2.0"
     }
   }
 }
