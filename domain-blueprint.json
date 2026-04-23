@@ -1,0 +1,134 @@
+{
+  "name": "playkit-js-youtube",
+  "version": "2.3.1",
+  "coreResponsibility": {
+    "description": "A YouTube playback engine plugin that integrates YouTube video playback capabilities into the Kaltura PlayKit JS Player ecosystem using the YouTube IFrame API.",
+    "type": "playback-engine-plugin"
+  },
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "YouTube video playback via IFrame API",
+      "YouTube player state management (play, pause, seek, volume)",
+      "Video quality/resolution selection and adaptive bitrate switching",
+      "Playback rate control",
+      "Clip/trim support (seekFrom, clipTo)",
+      "Chapter/cue point management for YouTube clips",
+      "Caption/subtitle toggling for YouTube videos",
+      "Muted autoplay support",
+      "Playlist support with YouTube entries",
+      "CSS fullscreen compatibility"
+    ],
+    "dataHandling": [
+      "YouTube player state machine (UNSTARTED, PLAYING, PAUSED, BUFFERING, ENDED, CUED)",
+      "Video tracks (quality levels from YouTube)",
+      "Playback position/currentTime",
+      "Duration and buffered ranges",
+      "Volume and mute state",
+      "Playback quality changes",
+      "YouTube error codes (2, 5, 100, 101, 150)"
+    ]
+  },
+  "integrationPoints": {
+    "upstream": [
+      {
+        "name": "@playkit-js/playkit-js",
+        "description": "Core player framework providing IEngine interface, EventManager, FakeEventTarget, Tracks, and utilities"
+      },
+      {
+        "name": "@playkit-js/kaltura-player-js",
+        "description": "Kaltura Player wrapper providing BasePlugin, registerPlugin, and UI components"
+      },
+      {
+        "name": "YouTube IFrame API",
+        "description": "External YouTube API loaded dynamically from https://www.youtube.com/iframe_api"
+      }
+    ],
+    "downstream": [
+      {
+        "name": "Kaltura Player applications",
+        "description": "Any application using Kaltura Player that needs to play YouTube-hosted content"
+      },
+      {
+        "name": "playkit-js-ui",
+        "description": "UI layer consumes engine events for controls, progress bar, quality selector"
+      },
+      {
+        "name": "playkit-timeline",
+        "description": "Timeline plugin for chapter/cue point visualization with YouTube clips"
+      }
+    ],
+    "externalAPIs": [
+      {
+        "name": "YouTube IFrame Player API",
+        "url": "https://developers.google.com/youtube/iframe_api_reference",
+        "usage": "Core playback functionality, quality control, captions, playback rate"
+      }
+    ]
+  },
+  "technicalStack": {
+    "primaryLanguages": [
+      "JavaScript (ES6+ with Flow type annotations)",
+      "TypeScript"
+    ],
+    "frameworks": [
+      "PlayKit JS (Kaltura player framework)"
+    ],
+    "buildTools": [
+      "Webpack",
+      "Babel",
+      "TypeScript compiler"
+    ],
+    "testingTools": [
+      "Karma",
+      "Mocha",
+      "Chai",
+      "Sinon"
+    ],
+    "entryPoints": [
+      {
+        "file": "src/index.js",
+        "description": "Main entry point - registers YouTube engine and plugin with PlayKit"
+      },
+      {
+        "file": "src/youtube.js",
+        "description": "Core YouTube engine class implementing IEngine interface"
+      },
+      {
+        "file": "src/youtube-plugin.ts",
+        "description": "YouTube plugin for UI customization and timeline integration"
+      }
+    ],
+    "outputArtifact": "dist/playkit-youtube.js"
+  },
+  "triageKeywords": [
+    "youtube",
+    "YouTube IFrame",
+    "YT.Player",
+    "video/youtube",
+    "youtube-engine",
+    "playkit-youtube",
+    "onYouTubeIframeAPIReady",
+    "YouTube playback quality",
+    "YouTube embed",
+    "YouTube iframe API",
+    "YouTube PlayerState",
+    "YouTube error 101",
+    "YouTube error 150",
+    "YouTube error 100",
+    "YouTube not playing"
+  ],
+  "errorPatterns": [
+    "Youtube Iframe API loading failed",
+    "Invalid params (error code 2)",
+    "Video not found (error code 100)",
+    "embedded players not allowed (error code 101/150)",
+    "YT.PlayerState undefined",
+    "Cannot read property of YT",
+    "youtube entry failed",
+    "YouTube video are not played in a playlist"
+  ],
+  "mimeTypes": [
+    "video/youtube"
+  ],
+  "engineId": "youtube"
+}
