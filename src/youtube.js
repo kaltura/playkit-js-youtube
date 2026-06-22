@@ -83,6 +83,8 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   _firstPlaying: boolean = true;
 
+  _iframeEl: ?HTMLIFrameElement = null;
+
   _currentState: number | null = null;
 
   _playerTracks: Array<Track> = [];
@@ -231,6 +233,7 @@ class Youtube extends FakeEventTarget implements IEngine {
     this._loaded = false;
     this._firstPlaying = true;
     this._isSeeking = false;
+    this._iframeEl = null;
     this._isAdaptiveBitrate = true;
     this._playerTracks = [];
     this._currentState = null;
@@ -1032,6 +1035,8 @@ class Youtube extends FakeEventTarget implements IEngine {
             const iframe = e.target && typeof e.target.getIframe === 'function' ? e.target.getIframe() : null;
             if (iframe) {
               iframe.setAttribute('aria-hidden', 'true');
+              this._iframeEl = iframe;
+              iframe.style.pointerEvents = 'none';
             }
           },
           onError: this._apiError,
@@ -1186,6 +1191,9 @@ class Youtube extends FakeEventTarget implements IEngine {
 
   _handleFirstPlaying() {
     this._firstPlaying = false;
+    if (this._iframeEl) {
+      this._iframeEl.style.pointerEvents = '';
+    }
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
     const {seekFrom, captions} = this._config.sources;
     if (this._api && seekFrom) {
